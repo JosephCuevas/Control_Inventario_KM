@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/tailwind.min.css">
+    <title>Dashboard Inventario</title>
+</head>
+
+<body class="bg-gray-900 font-sans leading-normal tracking-normal mt-12">
+    <header class="">
+        <nav aria-label="menu nav" class="bg-gray-800 pt-2 md:pt-1 pb-1 px-1 mt-0 h-auto fixed w-full z-20 top-0">
+            <div class="flex flex-wrap items-center">
+                <div aria-label="Home" class="flex flex-shrink md:w-1/5 justify-center md:justify-start text-white">
+                    <a href="#" aria-label="Home">
+                        <span class="text-xl pl-2"><i class="em em-grinning"></i></span>
+                    </a>
+                </div>
+                <div class="flex flex-1 md:w-2/5 justify-center md:justify-around text-white px-8">
+                    <span>
+                        <form action="" class="flex relative w-full" id="formBusqueda">
+                            <input aria-label="search" type="search" id="search" placeholder="Search"
+                                class="bg-gray-900 text-white transition border border-transparent focus:outline-none focus:border-gray-400 rounded py-1 px-5 pl-3 appearance-none leading-normal">
+                            <div class="m-2 text-center">
+                                <label class="block text-sm mb-2 font-bold" for="">Tipo de producto</label>
+                                <select class="form-select rounded text-gray-800 block w-full mt-1 rounded"
+                                    id="filtroTipoProducto" required>
+                                    <option value="0" selected>Todo</option>
+                                </select>
+                            </div>
+                            <button type="button"
+                                class="flex py-1 px-2 ml-2 text-xs text-centertext-white bg-blue-500 rounded-lg hover:bg-blue-700 font-bold items-center text-sm"
+                                onclick="envioDatos()" id="btnBuscar">
+                                Buscar</button>
+                            <div class="absolute search-icon" style="top: 1rem; left: .8rem;">
+                            </div>
+                        </form>
+                    </span>
+                </div>
+
+                <div class="flex w-full pt-2 content-center justify-between md:w-1/3 md:justify-end">
+                    <ul class="list-reset flex justify-between flex-1 md:flex-none items-center">
+                        <li class="flex-1 md:flex-none md:mr-3">
+                            <div class="relative inline-block">
+                                <button class="drop-button text-white py-2 px-2 border rounded"> <span id="user">
+                                    </span></button>
+                            </div>
+                        </li>
+                        <li class="flex-1 md:flex-none md:mr-3">
+                            <div class="relative inline-block">
+                                <button class="drop-button text-white py-2 px-2" onclick="salirLogout()"> <span id="">
+                                    </span>Salir</button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+        </nav>
+    </header>
+    <main>
+        <!-- BAR -->
+        <div class="flex flex-col md:flex-row">
+            <nav aria-label="alternative nav">
+                <div
+                    class="bg-gray-900 shadow-xl h-10 fixed bottom-0 mt-5 md:relative md:h-screen z-10 w-full md:w-64 content-center">
+                    <div class="mb-2 flex item-center justify-center text-white font-bold">
+                        <label class="block text-sm font-bold text-xl" for="">Productos</label>
+                    </div>
+                    <!--============= FORM  ============-->
+                    <form class="bg-transparent text-white shadow-md rounded px-4 pt-1 pb-2 mb-2 formulario" action=""
+                        id="formulario">
+                        <div class="mb-2">
+                            <label class="block text-sm mb-2" for="">Tipo de Producto</label>
+                            <select class="form-select rounded text-gray-800 block w-full mt-1" id="tipoProducto"
+                                required>
+                                <option value="0" selected>Seleccionar</option>
+                            </select>
+                        </div>
+                        <div class="mb-2">
+                            <label class="block text-sm mb-2" for="">Nombre del producto</label>
+                            <input type="text"
+                                class="shadow appearance-none w-full py-0.8 px-2 text-sm text-gray-700 border rounded leading-tight focus-outline-none focus:shadow-outline "
+                                placeholder="Nombre del producto" name="vchNombreProducto" type="text" required
+                                id="nombreProducto">
+                        </div>
+                        <div class="mb-2">
+                            <label class="block text-sm mb-2" for="">Precio del producto</label>
+                            <input type="number" step=".01" min="0"
+                                class="shadow appearance-none w-full py-0.8 px-2 text-sm text-gray-700 border rounded leading-tight focus-outline-none focus:shadow-outline "
+                                placeholder="Precio del producto" name="decPrecioProducto" required id="precioProducto">
+                        </div>
+                        <div class="flex item-center justify-around m-4">
+                            <button
+                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold rounded py-1 px-2 focus-outline-none focus:shadow-outline"
+                                id="btnGuardar">Guardar</button>
+                            <button
+                                class="bg-red-500 hover:bg-red-700 text-white font-bold rounded py-1 px-2 focus-outline-none focus:shadow-outline"
+                                id="btnLimpiar">Limpiar</button>
+                        </div>
+                    </form>
+
+                </div>
+            </nav>
+            <!--=============== BAR ================-->
+
+            <!--=============== TABLE ===============-->
+            <div class="text-white shadow m-3 h-auto w-full">
+                <table class="table-auto m-4" id="table">
+                    <thead class="">
+                        <tr>
+                            <th class="p-2 shadow">Tipo de producto</th>
+                            <th class="p-2 shadow">Nombre de producto</th>
+                            <th class="p-2 shadow">Precio de poroducto</th>
+                            <th class="p-2 shadow">Fecha de creación</th>
+                            <th class="p-2 shadow">Usuario de creación</th>
+                            <th class="p-2 shadow">Estatus de producto</th>
+                            <th class="p-2 shadow">Herramientas</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                    </tbody>
+                </table>
+            </div>
+
+            <!--============= TABLE =================-->
+        </div>
+    </main>
+
+
+    <script src="https://unpkg.com/@themesberg/flowbite@1.3.0/dist/datepicker.bundle.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+    <script src="./js/endpoints2.js"></script>
+
+</body>
+
+</html>
