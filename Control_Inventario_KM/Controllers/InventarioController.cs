@@ -1,0 +1,255 @@
+﻿using Control_Inventario_KM.App_Data;
+using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.Cors;
+
+namespace Control_Inventario_KM.Controllers
+{
+    [RoutePrefix("api/inventario")]
+    public class InventarioController : ApiController
+    {
+        /* === Cat Tipo de Prendas === */
+        [HttpPost]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        [Route("catTipoPrenda")]
+
+        public object catTipoPrenda([FromBody] JObject data)
+        {
+            using (var conexion = new Control_Inventario_KMEntities())
+            {
+                var catalogoTipoPrenda = conexion.CAT_TipoPrendas.Select(r => new { r.intTipoPrendaID, r.vchNombreTipoPrenda }).ToList();
+                return catalogoTipoPrenda;
+            }
+        }
+
+        /* == Cat Tallas == */
+        [HttpPost]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        [Route("catTallas")]
+
+        public object catTallas([FromBody] JObject data)
+        {
+            using (var conexion = new Control_Inventario_KMEntities())
+            {
+                var catalogoTallas = conexion.CAT_Tallas.Select(r => new { r.intTallaID, r.vchNombreTalla }).ToList();
+                return catalogoTallas;
+            }
+        }
+
+        /* == Cat Color == */
+        [HttpPost]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        [Route("catColores")]
+
+        public object catColores([FromBody] JObject data)
+        {
+            using (var conexion = new Control_Inventario_KMEntities())
+            {
+                var catalogoColores = conexion.CAT_Colores.Select(r => new { r.intColorID, r.vchNombreColor }).ToList();
+                return catalogoColores;
+            }
+        }
+
+        /* == Lista de productos == */
+        [HttpPost]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        [Route("listaProductos")]
+
+        public object listaProductos([FromBody] JObject data)
+        {
+            string nombre = data["nombre"].ToObject<string>();
+            int tipo = data["tipo"].ToObject<int>();
+            int talla = data["talla"].ToObject<int>();
+            int color = data["color"].ToObject<int>();
+            using (var conexion = new Control_Inventario_KMEntities())
+            {
+                var catalogoProductos = conexion.CAT_Productos.Where(r => (tipo == 0 || r.intTipoPrendaID == tipo)
+                && (talla == 0 || r.intTallaID == talla) && (color == 0 || r.intColorID == color)
+                && (nombre == string.Empty || r.vchNombreProducto.Contains(nombre))
+                ).Select(r => new
+                {
+                    r.intTipoPrendaID,
+                    r.intTallaID,
+                    r.intColorID,
+                    r.vchSKUProducto,
+                    r.vchNombreProducto,
+                    r.decCostoProducto,
+                    r.intStockProducto,
+                    r.vchDescripcionProducto,
+                    r.vchImagenProducto,
+                    r.bitEstadoProducto,
+                    r.datFechaAltaProducto
+                }).ToList();
+                return catalogoProductos;
+            }
+        }
+
+        /* == Agregar Producto == */
+        [HttpPost]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        [Route("agregarProducto")]
+
+        public object agregarProducto([FromBody] JObject data)
+        {
+            //{
+            //     "producto": {
+            //        "intTipoProductoID": "1",
+            //        "intTallaID": "2",
+            //        "intColorID": "3",
+            //        "vchSKU": "SKU",
+            //        "vchNombre": "Nombre Producto desde Front",
+            //        "decCosto":  "120",
+            //        "intStock": "1",
+            //        "vchDescripcion": "Descripcion",
+            //        "vchImagen": "Link imagen",
+            //    }
+            //}
+
+            CAT_Productos producto = data["producto"].ToObject<CAT_Productos>();
+            using (var conexion = new Control_Inventario_KMEntities())
+            {
+                if (conexion.CAT_Productos.Any(p => p.vchNombreProducto == producto.vchNombreProducto))
+                {
+                    return new
+                    {
+                        valido = false,
+                        Detalle = "Un productos ya existe con el mismo nombre"
+                    };
+                }
+                else
+                {
+                    producto.intTipoPrendaID = producto.intTipoPrendaID;
+                    producto.intTallaID = producto.intTallaID;
+                    producto.intColorID = producto.intColorID;
+                    producto.vchSKUProducto = producto.vchSKUProducto;
+                    producto.decCostoProducto = producto.decCostoProducto;
+                    producto.intStockProducto = producto.intStockProducto;
+                    producto.vchDescripcionProducto = producto.vchDescripcionProducto;
+                    producto.vchImagenProducto = producto.vchImagenProducto;
+                    producto.bitEstadoProducto = true;
+                    producto.datFechaAltaProducto = DateTime.Now;
+                    conexion.CAT_Productos.Add(producto);
+                    conexion.SaveChanges();
+                    return new
+                    {
+                        valido = true,
+                        Detalle = "Producto agregado correctamente"
+                    };
+
+                }
+            }
+        }
+
+        /* == Actualizar producto == */
+        [HttpPost]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        [Route("actualizaProducto")]
+
+        public object actualizaProducto([FromBody] JObject data)
+        {
+            //{
+            //    "producto": {
+            //        "intProductoID": "1",
+            //        "intTipoProductoID": 1,
+            //        "intTallaID": 2,
+            //        "intColorID": 3,
+            //        "vchSKU": "123SKU",
+            //        "vchNombre": "Nombre Producto desde Front",
+            //        "decCosto":  120,
+            //        "intStock": 10,
+            //        "vchDescripcion": "Descripcion",
+            //        "vchImagen": "Link imagen",
+            //        "bitEstado": 1
+            //    }
+            //}
+
+            CAT_Productos producto = data["producto"].ToObject<CAT_Productos>();
+            using (var conexion = new Control_Inventario_KMEntities())
+            {
+                if (conexion.CAT_Productos.Any(p => p.intProductoID == producto.intProductoID))
+                {
+                    if (conexion.CAT_Productos.Any(p => p.intProductoID != producto.intProductoID
+                     && p.vchNombreProducto == producto.vchNombreProducto))
+                    {
+                        return new
+                        {
+                            valido = false,
+                            Descripcion = "Un producto ya existe con el mismo nombre"
+                        };
+                    }
+                    else
+                    {
+                        var productoBase = conexion.CAT_Productos.FirstOrDefault(p => p.intProductoID == producto.intProductoID);
+                       
+                        productoBase.intTipoPrendaID = producto.intTipoPrendaID;
+                        productoBase.intTallaID = producto.intTallaID;
+                        productoBase.intColorID = producto.intColorID;
+                        productoBase.vchNombreProducto = producto.vchNombreProducto;
+                        productoBase.vchSKUProducto = producto.vchSKUProducto;
+                        productoBase.decCostoProducto = producto.decCostoProducto;
+                        productoBase.intStockProducto = producto.intStockProducto;
+                        productoBase.vchDescripcionProducto = producto.vchDescripcionProducto;
+                        productoBase.vchImagenProducto = producto.vchImagenProducto;
+                        productoBase.datFechaAltaProducto = DateTime.Now;
+                        conexion.SaveChanges();
+                        return new
+                        {
+                            valido = true,
+                            Detalle = "Producto Actualizado Correctamente"
+                        };
+                    }
+                }
+                else
+                {
+                    return new
+                    {
+                        valido = false,
+                        Detalle = "El producto no existe"
+                    };
+                }
+            }
+        }
+
+        /* == Actualiza estado == */
+        [HttpPost]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        [Route("actualizaEstadoProducto")]
+
+        public object actualizaEstadoProducto([FromBody] JObject data)
+        {
+            ////{
+            ////    "productoID":""
+            ////}
+
+            int intProductoID = data["productoID"].ToObject<int>();
+            using (var conexion = new Control_Inventario_KMEntities())
+            {
+                if (conexion.CAT_Productos.Any(p => p.intProductoID == intProductoID))
+                {
+                    var productoBase = conexion.CAT_Productos.FirstOrDefault(p => p.intProductoID == intProductoID);
+                    productoBase.datFechaAltaProducto = DateTime.Now;
+                    productoBase.bitEstadoProducto = !productoBase.bitEstadoProducto;
+                    conexion.SaveChanges();
+                    return new
+                    {
+                        valido = true,
+                        Detalle = "Producto actualzado correctamente"
+                    };
+                }
+                else
+                {
+                    return new
+                    {
+                        valido = false,
+                        Detalle = "El producto no existe"
+                    };
+                }
+            }
+        }
+    }
+}

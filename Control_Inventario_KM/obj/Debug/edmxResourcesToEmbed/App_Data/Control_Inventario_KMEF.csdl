@@ -1,0 +1,337 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Control_Inventario_KMModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="CAT_Colores">
+    <Key>
+      <PropertyRef Name="intColorID" />
+    </Key>
+    <Property Name="intColorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="vchNombreColor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="CAT_Productos" Relationship="Self.FK_Productos_CAT_Colores" FromRole="CAT_Colores" ToRole="CAT_Productos" />
+  </EntityType>
+  <EntityType Name="CAT_Personas">
+    <Key>
+      <PropertyRef Name="intPersonaID" />
+    </Key>
+    <Property Name="intPersonaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="intTipoPersonaID" Type="Int32" />
+    <Property Name="vchNombrePersona" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="vchDireccionPersona" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="vchTelefonoPersona" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="vhcEmailPersona" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="InventarioEntrante" Relationship="Self.FK_InventarioEntrante_CAT_Personas" FromRole="CAT_Personas" ToRole="InventarioEntrante" />
+    <NavigationProperty Name="InventarioSaliente" Relationship="Self.FK_InventarioSal_CAT_Pertsonas" FromRole="CAT_Personas" ToRole="InventarioSaliente" />
+    <NavigationProperty Name="CAT_TipoPersona" Relationship="Self.FK_Personas_CAT_TipoPersona" FromRole="CAT_Personas" ToRole="CAT_TipoPersona" />
+  </EntityType>
+  <EntityType Name="CAT_Productos">
+    <Key>
+      <PropertyRef Name="intProductoID" />
+    </Key>
+    <Property Name="intProductoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="intTipoPrendaID" Type="Int32" />
+    <Property Name="intTallaID" Type="Int32" />
+    <Property Name="intColorID" Type="Int32" />
+    <Property Name="vchSKUProducto" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="vchNombreProducto" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="decCostoProducto" Type="Decimal" Precision="6" Scale="2" />
+    <Property Name="intStockProducto" Type="Int32" />
+    <Property Name="vchDescripcionProducto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="vchImagenProducto" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="bitEstadoProducto" Type="Boolean" />
+    <Property Name="datFechaAltaProducto" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="CAT_Colores" Relationship="Self.FK_Productos_CAT_Colores" FromRole="CAT_Productos" ToRole="CAT_Colores" />
+    <NavigationProperty Name="DetalleInvSal" Relationship="Self.FK_DetalleInvSal_CAT_Productos" FromRole="CAT_Productos" ToRole="DetalleInvSal" />
+    <NavigationProperty Name="CAT_Tallas" Relationship="Self.FK_Productos_CAT_Tallas" FromRole="CAT_Productos" ToRole="CAT_Tallas" />
+    <NavigationProperty Name="CAT_TipoPrendas" Relationship="Self.FK_Productos_CAT_TipoPrendas" FromRole="CAT_Productos" ToRole="CAT_TipoPrendas" />
+  </EntityType>
+  <EntityType Name="CAT_RolUsuario">
+    <Key>
+      <PropertyRef Name="intRolID" />
+    </Key>
+    <Property Name="intRolID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="vchNombreRol" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="vchDescripcionRol" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="bitEstadoRol" Type="Boolean" />
+    <NavigationProperty Name="CAT_Usuarios" Relationship="Self.FK_Usuarios_CAT_RolUsuario" FromRole="CAT_RolUsuario" ToRole="CAT_Usuarios" />
+  </EntityType>
+  <EntityType Name="CAT_Tallas">
+    <Key>
+      <PropertyRef Name="intTallaID" />
+    </Key>
+    <Property Name="intTallaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="vchNombreTalla" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="CAT_Productos" Relationship="Self.FK_Productos_CAT_Tallas" FromRole="CAT_Tallas" ToRole="CAT_Productos" />
+  </EntityType>
+  <EntityType Name="CAT_TipoPersona">
+    <Key>
+      <PropertyRef Name="intTipoPersonaID" />
+    </Key>
+    <Property Name="intTipoPersonaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="vchNombreTipoPersona" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="CAT_Personas" Relationship="Self.FK_Personas_CAT_TipoPersona" FromRole="CAT_TipoPersona" ToRole="CAT_Personas" />
+  </EntityType>
+  <EntityType Name="CAT_TipoPrendas">
+    <Key>
+      <PropertyRef Name="intTipoPrendaID" />
+    </Key>
+    <Property Name="intTipoPrendaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="vchNombreTipoPrenda" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="CAT_Productos" Relationship="Self.FK_Productos_CAT_TipoPrendas" FromRole="CAT_TipoPrendas" ToRole="CAT_Productos" />
+  </EntityType>
+  <EntityType Name="CAT_Usuarios">
+    <Key>
+      <PropertyRef Name="intUsuarioID" />
+    </Key>
+    <Property Name="intUsuarioID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="intRolID" Type="Int32" />
+    <Property Name="vchNombreUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="vchApellidoUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="vchDireccionUsuario" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="vchTelefonoUsuario" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="vchUserUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="vchContraseñaUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="bitEstadoUsuario" Type="Boolean" />
+    <NavigationProperty Name="CAT_RolUsuario" Relationship="Self.FK_Usuarios_CAT_RolUsuario" FromRole="CAT_Usuarios" ToRole="CAT_RolUsuario" />
+    <NavigationProperty Name="InventarioEntrante" Relationship="Self.FK_InventarioEntrante_CAT_Usuarios" FromRole="CAT_Usuarios" ToRole="InventarioEntrante" />
+  </EntityType>
+  <EntityType Name="DetalleInvEnt">
+    <Key>
+      <PropertyRef Name="intDetalleInvEntID" />
+    </Key>
+    <Property Name="intDetalleInvEntID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="intInventarioEntID" Type="Int32" />
+    <Property Name="intProductoID" Type="Int32" />
+    <Property Name="intCantidadProEnt" Type="Int32" />
+    <Property Name="decCostoParcial" Type="Decimal" Precision="15" Scale="2" />
+    <NavigationProperty Name="InventarioEntrante" Relationship="Self.FK_DetalleInvEnt_InventarioEntrante" FromRole="DetalleInvEnt" ToRole="InventarioEntrante" />
+  </EntityType>
+  <EntityType Name="DetalleInvSal">
+    <Key>
+      <PropertyRef Name="intDetalleInvSalID" />
+    </Key>
+    <Property Name="intDetalleInvSalID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="intInventarioSalID" Type="Int32" />
+    <Property Name="intProductoID" Type="Int32" />
+    <Property Name="intCantidadProSal" Type="Int32" />
+    <Property Name="decCostoParcial" Type="Decimal" Precision="15" Scale="2" />
+    <Property Name="decDescuento" Type="Decimal" Precision="15" Scale="2" />
+    <NavigationProperty Name="CAT_Productos" Relationship="Self.FK_DetalleInvSal_CAT_Productos" FromRole="DetalleInvSal" ToRole="CAT_Productos" />
+    <NavigationProperty Name="InventarioSaliente" Relationship="Self.FK_DetalleInvSal_InventarioSaliente" FromRole="DetalleInvSal" ToRole="InventarioSaliente" />
+  </EntityType>
+  <EntityType Name="InventarioEntrante">
+    <Key>
+      <PropertyRef Name="intInventarioEntID" />
+    </Key>
+    <Property Name="intInventarioEntID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="intPersonaID" Type="Int32" />
+    <Property Name="intUsuarioID" Type="Int32" />
+    <Property Name="datFechaInvEnt" Type="DateTime" Precision="3" />
+    <Property Name="decTotalInvEnt" Type="Decimal" Precision="15" Scale="2" />
+    <Property Name="vchEstadoInvEnt" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="CAT_Personas" Relationship="Self.FK_InventarioEntrante_CAT_Personas" FromRole="InventarioEntrante" ToRole="CAT_Personas" />
+    <NavigationProperty Name="CAT_Usuarios" Relationship="Self.FK_InventarioEntrante_CAT_Usuarios" FromRole="InventarioEntrante" ToRole="CAT_Usuarios" />
+    <NavigationProperty Name="DetalleInvEnt" Relationship="Self.FK_DetalleInvEnt_InventarioEntrante" FromRole="InventarioEntrante" ToRole="DetalleInvEnt" />
+  </EntityType>
+  <EntityType Name="InventarioSaliente">
+    <Key>
+      <PropertyRef Name="intInventarioSalID" />
+    </Key>
+    <Property Name="intInventarioSalID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="intPersonaID" Type="Int32" />
+    <Property Name="intUsuarioID" Type="Int32" />
+    <Property Name="datFechaInvSal" Type="DateTime" Precision="3" />
+    <Property Name="decTotalInvSal" Type="Decimal" Precision="15" Scale="2" />
+    <Property Name="vchEstadoInvSal" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="CAT_Personas" Relationship="Self.FK_InventarioSal_CAT_Pertsonas" FromRole="InventarioSaliente" ToRole="CAT_Personas" />
+    <NavigationProperty Name="DetalleInvSal" Relationship="Self.FK_DetalleInvSal_InventarioSaliente" FromRole="InventarioSaliente" ToRole="DetalleInvSal" />
+  </EntityType>
+  <Association Name="FK_Productos_CAT_Colores">
+    <End Role="CAT_Colores" Type="Self.CAT_Colores" Multiplicity="0..1" />
+    <End Role="CAT_Productos" Type="Self.CAT_Productos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CAT_Colores">
+        <PropertyRef Name="intColorID" />
+      </Principal>
+      <Dependent Role="CAT_Productos">
+        <PropertyRef Name="intColorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InventarioEntrante_CAT_Personas">
+    <End Role="CAT_Personas" Type="Self.CAT_Personas" Multiplicity="0..1" />
+    <End Role="InventarioEntrante" Type="Self.InventarioEntrante" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CAT_Personas">
+        <PropertyRef Name="intPersonaID" />
+      </Principal>
+      <Dependent Role="InventarioEntrante">
+        <PropertyRef Name="intPersonaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InventarioSal_CAT_Pertsonas">
+    <End Role="CAT_Personas" Type="Self.CAT_Personas" Multiplicity="0..1" />
+    <End Role="InventarioSaliente" Type="Self.InventarioSaliente" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CAT_Personas">
+        <PropertyRef Name="intPersonaID" />
+      </Principal>
+      <Dependent Role="InventarioSaliente">
+        <PropertyRef Name="intPersonaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Personas_CAT_TipoPersona">
+    <End Role="CAT_TipoPersona" Type="Self.CAT_TipoPersona" Multiplicity="0..1" />
+    <End Role="CAT_Personas" Type="Self.CAT_Personas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CAT_TipoPersona">
+        <PropertyRef Name="intTipoPersonaID" />
+      </Principal>
+      <Dependent Role="CAT_Personas">
+        <PropertyRef Name="intTipoPersonaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DetalleInvSal_CAT_Productos">
+    <End Role="CAT_Productos" Type="Self.CAT_Productos" Multiplicity="0..1" />
+    <End Role="DetalleInvSal" Type="Self.DetalleInvSal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CAT_Productos">
+        <PropertyRef Name="intProductoID" />
+      </Principal>
+      <Dependent Role="DetalleInvSal">
+        <PropertyRef Name="intProductoID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Productos_CAT_Tallas">
+    <End Role="CAT_Tallas" Type="Self.CAT_Tallas" Multiplicity="0..1" />
+    <End Role="CAT_Productos" Type="Self.CAT_Productos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CAT_Tallas">
+        <PropertyRef Name="intTallaID" />
+      </Principal>
+      <Dependent Role="CAT_Productos">
+        <PropertyRef Name="intTallaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Productos_CAT_TipoPrendas">
+    <End Role="CAT_TipoPrendas" Type="Self.CAT_TipoPrendas" Multiplicity="0..1" />
+    <End Role="CAT_Productos" Type="Self.CAT_Productos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CAT_TipoPrendas">
+        <PropertyRef Name="intTipoPrendaID" />
+      </Principal>
+      <Dependent Role="CAT_Productos">
+        <PropertyRef Name="intTipoPrendaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Usuarios_CAT_RolUsuario">
+    <End Role="CAT_RolUsuario" Type="Self.CAT_RolUsuario" Multiplicity="0..1" />
+    <End Role="CAT_Usuarios" Type="Self.CAT_Usuarios" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CAT_RolUsuario">
+        <PropertyRef Name="intRolID" />
+      </Principal>
+      <Dependent Role="CAT_Usuarios">
+        <PropertyRef Name="intRolID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InventarioEntrante_CAT_Usuarios">
+    <End Role="CAT_Usuarios" Type="Self.CAT_Usuarios" Multiplicity="0..1" />
+    <End Role="InventarioEntrante" Type="Self.InventarioEntrante" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CAT_Usuarios">
+        <PropertyRef Name="intUsuarioID" />
+      </Principal>
+      <Dependent Role="InventarioEntrante">
+        <PropertyRef Name="intUsuarioID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DetalleInvEnt_InventarioEntrante">
+    <End Role="InventarioEntrante" Type="Self.InventarioEntrante" Multiplicity="0..1" />
+    <End Role="DetalleInvEnt" Type="Self.DetalleInvEnt" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="InventarioEntrante">
+        <PropertyRef Name="intInventarioEntID" />
+      </Principal>
+      <Dependent Role="DetalleInvEnt">
+        <PropertyRef Name="intInventarioEntID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DetalleInvSal_InventarioSaliente">
+    <End Role="InventarioSaliente" Type="Self.InventarioSaliente" Multiplicity="0..1" />
+    <End Role="DetalleInvSal" Type="Self.DetalleInvSal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="InventarioSaliente">
+        <PropertyRef Name="intInventarioSalID" />
+      </Principal>
+      <Dependent Role="DetalleInvSal">
+        <PropertyRef Name="intInventarioSalID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Control_Inventario_KMEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="CAT_Colores" EntityType="Self.CAT_Colores" />
+    <EntitySet Name="CAT_Personas" EntityType="Self.CAT_Personas" />
+    <EntitySet Name="CAT_Productos" EntityType="Self.CAT_Productos" />
+    <EntitySet Name="CAT_RolUsuario" EntityType="Self.CAT_RolUsuario" />
+    <EntitySet Name="CAT_Tallas" EntityType="Self.CAT_Tallas" />
+    <EntitySet Name="CAT_TipoPersona" EntityType="Self.CAT_TipoPersona" />
+    <EntitySet Name="CAT_TipoPrendas" EntityType="Self.CAT_TipoPrendas" />
+    <EntitySet Name="CAT_Usuarios" EntityType="Self.CAT_Usuarios" />
+    <EntitySet Name="DetalleInvEnt" EntityType="Self.DetalleInvEnt" />
+    <EntitySet Name="DetalleInvSal" EntityType="Self.DetalleInvSal" />
+    <EntitySet Name="InventarioEntrante" EntityType="Self.InventarioEntrante" />
+    <EntitySet Name="InventarioSaliente" EntityType="Self.InventarioSaliente" />
+    <AssociationSet Name="FK_Productos_CAT_Colores" Association="Self.FK_Productos_CAT_Colores">
+      <End Role="CAT_Colores" EntitySet="CAT_Colores" />
+      <End Role="CAT_Productos" EntitySet="CAT_Productos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InventarioEntrante_CAT_Personas" Association="Self.FK_InventarioEntrante_CAT_Personas">
+      <End Role="CAT_Personas" EntitySet="CAT_Personas" />
+      <End Role="InventarioEntrante" EntitySet="InventarioEntrante" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InventarioSal_CAT_Pertsonas" Association="Self.FK_InventarioSal_CAT_Pertsonas">
+      <End Role="CAT_Personas" EntitySet="CAT_Personas" />
+      <End Role="InventarioSaliente" EntitySet="InventarioSaliente" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Personas_CAT_TipoPersona" Association="Self.FK_Personas_CAT_TipoPersona">
+      <End Role="CAT_TipoPersona" EntitySet="CAT_TipoPersona" />
+      <End Role="CAT_Personas" EntitySet="CAT_Personas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DetalleInvSal_CAT_Productos" Association="Self.FK_DetalleInvSal_CAT_Productos">
+      <End Role="CAT_Productos" EntitySet="CAT_Productos" />
+      <End Role="DetalleInvSal" EntitySet="DetalleInvSal" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Productos_CAT_Tallas" Association="Self.FK_Productos_CAT_Tallas">
+      <End Role="CAT_Tallas" EntitySet="CAT_Tallas" />
+      <End Role="CAT_Productos" EntitySet="CAT_Productos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Productos_CAT_TipoPrendas" Association="Self.FK_Productos_CAT_TipoPrendas">
+      <End Role="CAT_TipoPrendas" EntitySet="CAT_TipoPrendas" />
+      <End Role="CAT_Productos" EntitySet="CAT_Productos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Usuarios_CAT_RolUsuario" Association="Self.FK_Usuarios_CAT_RolUsuario">
+      <End Role="CAT_RolUsuario" EntitySet="CAT_RolUsuario" />
+      <End Role="CAT_Usuarios" EntitySet="CAT_Usuarios" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InventarioEntrante_CAT_Usuarios" Association="Self.FK_InventarioEntrante_CAT_Usuarios">
+      <End Role="CAT_Usuarios" EntitySet="CAT_Usuarios" />
+      <End Role="InventarioEntrante" EntitySet="InventarioEntrante" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DetalleInvEnt_InventarioEntrante" Association="Self.FK_DetalleInvEnt_InventarioEntrante">
+      <End Role="InventarioEntrante" EntitySet="InventarioEntrante" />
+      <End Role="DetalleInvEnt" EntitySet="DetalleInvEnt" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DetalleInvSal_InventarioSaliente" Association="Self.FK_DetalleInvSal_InventarioSaliente">
+      <End Role="InventarioSaliente" EntitySet="InventarioSaliente" />
+      <End Role="DetalleInvSal" EntitySet="DetalleInvSal" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

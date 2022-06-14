@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Control_Inventario_KMModelStoreContainer" CdmEntityContainer="Control_Inventario_KMEntities">
+    <EntitySetMapping Name="CAT_Colores">
+      <EntityTypeMapping TypeName="Control_Inventario_KMModel.CAT_Colores">
+        <MappingFragment StoreEntitySet="CAT_Colores">
+          <ScalarProperty Name="intColorID" ColumnName="intColorID" />
+          <ScalarProperty Name="vchNombreColor" ColumnName="vchNombreColor" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CAT_Personas">
+      <EntityTypeMapping TypeName="Control_Inventario_KMModel.CAT_Personas">
+        <MappingFragment StoreEntitySet="CAT_Personas">
+          <ScalarProperty Name="intPersonaID" ColumnName="intPersonaID" />
+          <ScalarProperty Name="intTipoPersonaID" ColumnName="intTipoPersonaID" />
+          <ScalarProperty Name="vchNombrePersona" ColumnName="vchNombrePersona" />
+          <ScalarProperty Name="vchDireccionPersona" ColumnName="vchDireccionPersona" />
+          <ScalarProperty Name="vchTelefonoPersona" ColumnName="vchTelefonoPersona" />
+          <ScalarProperty Name="vhcEmailPersona" ColumnName="vhcEmailPersona" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CAT_Productos">
+      <EntityTypeMapping TypeName="Control_Inventario_KMModel.CAT_Productos">
+        <MappingFragment StoreEntitySet="CAT_Productos">
+          <ScalarProperty Name="intProductoID" ColumnName="intProductoID" />
+          <ScalarProperty Name="intTipoPrendaID" ColumnName="intTipoPrendaID" />
+          <ScalarProperty Name="intTallaID" ColumnName="intTallaID" />
+          <ScalarProperty Name="intColorID" ColumnName="intColorID" />
+          <ScalarProperty Name="vchSKUProducto" ColumnName="vchSKUProducto" />
+          <ScalarProperty Name="vchNombreProducto" ColumnName="vchNombreProducto" />
+          <ScalarProperty Name="decCostoProducto" ColumnName="decCostoProducto" />
+          <ScalarProperty Name="intStockProducto" ColumnName="intStockProducto" />
+          <ScalarProperty Name="vchDescripcionProducto" ColumnName="vchDescripcionProducto" />
+          <ScalarProperty Name="vchImagenProducto" ColumnName="vchImagenProducto" />
+          <ScalarProperty Name="bitEstadoProducto" ColumnName="bitEstadoProducto" />
+          <ScalarProperty Name="datFechaAltaProducto" ColumnName="datFechaAltaProducto" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CAT_RolUsuario">
+      <EntityTypeMapping TypeName="Control_Inventario_KMModel.CAT_RolUsuario">
+        <MappingFragment StoreEntitySet="CAT_RolUsuario">
+          <ScalarProperty Name="intRolID" ColumnName="intRolID" />
+          <ScalarProperty Name="vchNombreRol" ColumnName="vchNombreRol" />
+          <ScalarProperty Name="vchDescripcionRol" ColumnName="vchDescripcionRol" />
+          <ScalarProperty Name="bitEstadoRol" ColumnName="bitEstadoRol" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CAT_Tallas">
+      <EntityTypeMapping TypeName="Control_Inventario_KMModel.CAT_Tallas">
+        <MappingFragment StoreEntitySet="CAT_Tallas">
+          <ScalarProperty Name="intTallaID" ColumnName="intTallaID" />
+          <ScalarProperty Name="vchNombreTalla" ColumnName="vchNombreTalla" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CAT_TipoPersona">
+      <EntityTypeMapping TypeName="Control_Inventario_KMModel.CAT_TipoPersona">
+        <MappingFragment StoreEntitySet="CAT_TipoPersona">
+          <ScalarProperty Name="intTipoPersonaID" ColumnName="intTipoPersonaID" />
+          <ScalarProperty Name="vchNombreTipoPersona" ColumnName="vchNombreTipoPersona" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CAT_TipoPrendas">
+      <EntityTypeMapping TypeName="Control_Inventario_KMModel.CAT_TipoPrendas">
+        <MappingFragment StoreEntitySet="CAT_TipoPrendas">
+          <ScalarProperty Name="intTipoPrendaID" ColumnName="intTipoPrendaID" />
+          <ScalarProperty Name="vchNombreTipoPrenda" ColumnName="vchNombreTipoPrenda" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CAT_Usuarios">
+      <EntityTypeMapping TypeName="Control_Inventario_KMModel.CAT_Usuarios">
+        <MappingFragment StoreEntitySet="CAT_Usuarios">
+          <ScalarProperty Name="intUsuarioID" ColumnName="intUsuarioID" />
+          <ScalarProperty Name="intRolID" ColumnName="intRolID" />
+          <ScalarProperty Name="vchNombreUsuario" ColumnName="vchNombreUsuario" />
+          <ScalarProperty Name="vchApellidoUsuario" ColumnName="vchApellidoUsuario" />
+          <ScalarProperty Name="vchDireccionUsuario" ColumnName="vchDireccionUsuario" />
+          <ScalarProperty Name="vchTelefonoUsuario" ColumnName="vchTelefonoUsuario" />
+          <ScalarProperty Name="vchUserUsuario" ColumnName="vchUserUsuario" />
+          <ScalarProperty Name="vchContraseñaUsuario" ColumnName="vchContraseñaUsuario" />
+          <ScalarProperty Name="bitEstadoUsuario" ColumnName="bitEstadoUsuario" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DetalleInvEnt">
+      <EntityTypeMapping TypeName="Control_Inventario_KMModel.DetalleInvEnt">
+        <MappingFragment StoreEntitySet="DetalleInvEnt">
+          <ScalarProperty Name="intDetalleInvEntID" ColumnName="intDetalleInvEntID" />
+          <ScalarProperty Name="intInventarioEntID" ColumnName="intInventarioEntID" />
+          <ScalarProperty Name="intProductoID" ColumnName="intProductoID" />
+          <ScalarProperty Name="intCantidadProEnt" ColumnName="intCantidadProEnt" />
+          <ScalarProperty Name="decCostoParcial" ColumnName="decCostoParcial" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DetalleInvSal">
+      <EntityTypeMapping TypeName="Control_Inventario_KMModel.DetalleInvSal">
+        <MappingFragment StoreEntitySet="DetalleInvSal">
+          <ScalarProperty Name="intDetalleInvSalID" ColumnName="intDetalleInvSalID" />
+          <ScalarProperty Name="intInventarioSalID" ColumnName="intInventarioSalID" />
+          <ScalarProperty Name="intProductoID" ColumnName="intProductoID" />
+          <ScalarProperty Name="intCantidadProSal" ColumnName="intCantidadProSal" />
+          <ScalarProperty Name="decCostoParcial" ColumnName="decCostoParcial" />
+          <ScalarProperty Name="decDescuento" ColumnName="decDescuento" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="InventarioEntrante">
+      <EntityTypeMapping TypeName="Control_Inventario_KMModel.InventarioEntrante">
+        <MappingFragment StoreEntitySet="InventarioEntrante">
+          <ScalarProperty Name="intInventarioEntID" ColumnName="intInventarioEntID" />
+          <ScalarProperty Name="intPersonaID" ColumnName="intPersonaID" />
+          <ScalarProperty Name="intUsuarioID" ColumnName="intUsuarioID" />
+          <ScalarProperty Name="datFechaInvEnt" ColumnName="datFechaInvEnt" />
+          <ScalarProperty Name="decTotalInvEnt" ColumnName="decTotalInvEnt" />
+          <ScalarProperty Name="vchEstadoInvEnt" ColumnName="vchEstadoInvEnt" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="InventarioSaliente">
+      <EntityTypeMapping TypeName="Control_Inventario_KMModel.InventarioSaliente">
+        <MappingFragment StoreEntitySet="InventarioSaliente">
+          <ScalarProperty Name="intInventarioSalID" ColumnName="intInventarioSalID" />
+          <ScalarProperty Name="intPersonaID" ColumnName="intPersonaID" />
+          <ScalarProperty Name="intUsuarioID" ColumnName="intUsuarioID" />
+          <ScalarProperty Name="datFechaInvSal" ColumnName="datFechaInvSal" />
+          <ScalarProperty Name="decTotalInvSal" ColumnName="decTotalInvSal" />
+          <ScalarProperty Name="vchEstadoInvSal" ColumnName="vchEstadoInvSal" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

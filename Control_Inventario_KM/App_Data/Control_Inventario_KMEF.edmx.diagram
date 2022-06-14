@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="01f6770189fd411b97b3cfb28ee60de9" Name="Diagram1">
+        <EntityTypeShape EntityType="Control_Inventario_KMModel.CAT_Colores" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Control_Inventario_KMModel.CAT_Personas" Width="1.5" PointX="3.25" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Control_Inventario_KMModel.CAT_Productos" Width="1.5" PointX="3.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Control_Inventario_KMModel.CAT_RolUsuario" Width="1.5" PointX="1" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Control_Inventario_KMModel.CAT_Tallas" Width="1.5" PointX="0.75" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Control_Inventario_KMModel.CAT_TipoPersona" Width="1.5" PointX="0.75" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Control_Inventario_KMModel.CAT_TipoPrendas" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Control_Inventario_KMModel.CAT_Usuarios" Width="1.5" PointX="3.25" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Control_Inventario_KMModel.DetalleInvEnt" Width="1.5" PointX="8" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Control_Inventario_KMModel.DetalleInvSal" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Control_Inventario_KMModel.InventarioEntrante" Width="1.5" PointX="6" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Control_Inventario_KMModel.InventarioSaliente" Width="1.5" PointX="6" PointY="3.75" IsExpanded="true" />
+        <AssociationConnector Association="Control_Inventario_KMModel.FK_Productos_CAT_Colores" ManuallyRouted="false" />
+        <AssociationConnector Association="Control_Inventario_KMModel.FK_InventarioEntrante_CAT_Personas" ManuallyRouted="false" />
+        <AssociationConnector Association="Control_Inventario_KMModel.FK_InventarioSal_CAT_Pertsonas" ManuallyRouted="false" />
+        <AssociationConnector Association="Control_Inventario_KMModel.FK_Personas_CAT_TipoPersona" ManuallyRouted="false" />
+        <AssociationConnector Association="Control_Inventario_KMModel.FK_DetalleInvSal_CAT_Productos" ManuallyRouted="false" />
+        <AssociationConnector Association="Control_Inventario_KMModel.FK_Productos_CAT_Tallas" ManuallyRouted="false" />
+        <AssociationConnector Association="Control_Inventario_KMModel.FK_Productos_CAT_TipoPrendas" ManuallyRouted="false" />
+        <AssociationConnector Association="Control_Inventario_KMModel.FK_Usuarios_CAT_RolUsuario" ManuallyRouted="false" />
+        <AssociationConnector Association="Control_Inventario_KMModel.FK_InventarioEntrante_CAT_Usuarios" ManuallyRouted="false" />
+        <AssociationConnector Association="Control_Inventario_KMModel.FK_DetalleInvEnt_InventarioEntrante" ManuallyRouted="false" />
+        <AssociationConnector Association="Control_Inventario_KMModel.FK_DetalleInvSal_InventarioSaliente" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
