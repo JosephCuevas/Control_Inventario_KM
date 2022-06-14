@@ -30,8 +30,10 @@ saludoUsuario.innerHTML = 'Hola, ' + usuarioLog;
 saludarUsuario.appendChild(saludoUsuario);
 
 var data = {
-    "nombre": "",
-    "tipo": 0
+        "nombre": "",
+        "tipo": 0,
+        "talla": 0,
+        "color": 0
 };
 
 
@@ -203,8 +205,8 @@ function envioDatos(){
 
 function enviarDatosBD(e){
     e.preventDefault();
-    const APIC = 'https://localhost:44327/api/Inventario/AgregarProducto'
-    const APIEdit = 'https://localhost:44327/api/Inventario/ActualizarProducto'
+    const APIC = 'https://localhost:44363/api/inventario/AgregarProducto'
+    const APIEdit = 'https://localhost:44363/api/inventario/ActualizarProducto'
 
     const tipoProducto = document.getElementById('tipoProducto');
     const precioProducto = document.querySelector('#precioProducto').value;
