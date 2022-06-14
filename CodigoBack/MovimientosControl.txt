@@ -1,0 +1,37 @@
+using Control_Inventario_KM.App_Data;
+using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.Cors;
+
+namespace Control_Inventario_KM.Controllers
+{
+    [RoutePrefix("api/movimientos")]
+    public class MovimientoInventarioController : ApiController
+    {
+        [HttpPost]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        [Route("listaMovProd")]
+
+        public object listaMovProd([FromBody] JObject data)
+        {
+            string nombreProd = data["nombreProd"].ToObject<string>();
+            using (var conexion = new Control_Inventario_KMEntities())
+            {
+                var catalogoProductos = conexion.CAT_Productos.Where(r => (nombreProd == string.Empty || r.vchNombreProducto.Contains(nombreProd))
+                ).Select(r => new
+                {
+                    r.intProductoID,
+                    r.vchNombreProducto,
+                    r.decCostoProducto,
+                    r.intStockProducto
+                }).ToList();
+                return catalogoProductos;                
+            }
+        }
+    }
+}
