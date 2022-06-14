@@ -15,7 +15,7 @@ go
 create table CAT_Tallas
 (
 	intTallaID int IDENTITY,
-	vchNombreTalla varchar(50) null,
+	vchNombreTalla varchar(70) null,
 	constraint PK_CAT_Tallas primary key (intTallaID)
 )
 
@@ -78,10 +78,10 @@ create table CAT_Usuarios
 	intRolID int null,
 	vchNombreUsuario varchar(50) null,
 	vchApellidoUsuario varchar(50) null,
-	vchDireccionUsuario varchar(100) null,
+	vchDireccionUsuario varchar(250) null,
 	vchTelefonoUsuario varchar(15) null,
 	vchUserUsuario varchar(50) null,
-	vchContraseñaUsuario varchar(50) null,
+	vchContrasenaUsuario varchar(50) null,
 	bitEstadoUsuario bit null,
 	constraint PK_CAT_Usuarios primary key (intUsuarioId)
 )
@@ -105,7 +105,7 @@ create table CAT_Personas
 	intPersonaID int IDENTITY,
 	intTipoPersonaID int null,
 	vchNombrePersona varchar(50) null,
-	vchDireccionPersona varchar(100) null,
+	vchDireccionPersona varchar(250) null,
 	vchTelefonoPersona varchar(15) null,
 	vhcEmailPersona varchar(50) null,
 	constraint PK_CAT_Personas primary key (intPersonaID)
