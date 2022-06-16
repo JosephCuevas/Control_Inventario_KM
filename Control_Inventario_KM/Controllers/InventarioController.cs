@@ -73,6 +73,7 @@ namespace Control_Inventario_KM.Controllers
                 && (nombre == string.Empty || r.vchNombreProducto.Contains(nombre))
                 ).Select(r => new
                 {
+                    r.intProductoID,
                     r.intTipoPrendaID,
                     r.intTallaID,
                     r.intColorID,
