@@ -78,8 +78,22 @@
                     <form class="bg-transparent text-white shadow-md rounded px-4 pt-1 pb-2 mb-2 formulario" action=""
                         id="formulario">
                         <div class="mb-2">
-                            <label class="block text-sm mb-2" for="">Tipo de Producto</label>
-                            <select class="form-select rounded text-gray-800 block w-full mt-1" id="tipoProducto"
+                            <label class="block text-sm mb-2" for="">Tipo de Prenda</label>
+                            <select class="form-select rounded text-gray-800 block w-full mt-1" id="tipoPrenda"
+                                required>
+                                <option value="0" selected>Seleccionar</option>
+                            </select>
+                        </div>
+                        <div class="mb-2">
+                            <label class="block text-sm mb-2" for="">Talla</label>
+                            <select class="form-select rounded text-gray-800 block w-full mt-1" id="tallaPrenda"
+                                required>
+                                <option value="0" selected>Seleccionar</option>
+                            </select>
+                        </div>
+                        <div class="mb-2">
+                            <label class="block text-sm mb-2" for="">Color</label>
+                            <select class="form-select rounded text-gray-800 block w-full mt-1" id="colorPrenda"
                                 required>
                                 <option value="0" selected>Seleccionar</option>
                             </select>
@@ -92,10 +106,31 @@
                                 id="nombreProducto">
                         </div>
                         <div class="mb-2">
-                            <label class="block text-sm mb-2" for="">Precio del producto</label>
+                            <label class="block text-sm mb-2" for="">SKU</label>
+                            <input type="text"
+                                class="shadow appearance-none w-full py-0.8 px-2 text-sm text-gray-700 border rounded leading-tight focus-outline-none focus:shadow-outline "
+                                placeholder="SKU" name="SKU" type="text" required
+                                id="skuProducto">
+                        </div>
+                        <div class="mb-2">
+                            <label class="block text-sm mb-2" for="">Costo del producto</label>
                             <input type="number" step=".01" min="0"
                                 class="shadow appearance-none w-full py-0.8 px-2 text-sm text-gray-700 border rounded leading-tight focus-outline-none focus:shadow-outline "
-                                placeholder="Precio del producto" name="decPrecioProducto" required id="precioProducto">
+                                placeholder="Costo del producto" name="decCostoProducto" required id="costoProducto">
+                        </div>
+                        <div class="mb-2">
+                            <label class="block text-sm mb-2" for="">Inventario del producto</label>
+                            <input type="number" step=".01" min="0"
+                                class="shadow appearance-none w-full py-0.8 px-2 text-sm text-gray-700 border rounded leading-tight focus-outline-none focus:shadow-outline "
+                                placeholder="Inventario del producto" name="inventarioProducto" required id="inventarioProducto">
+                        </div>
+                        <div class="mb-2">
+                            <label class="block text-sm mb-2" for="">Descripción</label>
+                            <textarea class="shadow appearance-none w-full py-0.8 px-2 text-sm text-gray-700 border rounded leading-tight focus-outline-none focus:shadow-outline" name="descripcion" rows="4" cols="19" placeholder="Descripción"></textarea>
+                        </div>
+                        <div class="mb-2">
+                            <label class="block text-sm mb-2" for="">Imagen</label>
+                            <input class="shadow appearance-none w-full py-0.8 px-2 text-sm text-gray-700 border rounded leading-tight focus-outline-none focus:shadow-outline" type="text" size="15" maxlength="500" placeholder="Imagen" name="imagen">
                         </div>
                         <div class="flex item-center justify-around m-4">
                             <button
@@ -116,13 +151,13 @@
                 <table class="table-auto m-4" id="table">
                     <thead class="">
                         <tr>
-                            <th class="p-2 shadow">Tipo de producto</th>
-                            <th class="p-2 shadow">Nombre de producto</th>
-                            <th class="p-2 shadow">Precio de poroducto</th>
-                            <th class="p-2 shadow">Fecha de creación</th>
-                            <th class="p-2 shadow">Usuario de creación</th>
-                            <th class="p-2 shadow">Estatus de producto</th>
-                            <th class="p-2 shadow">Herramientas</th>
+                            <th class="p-2 shadow text-center">Estado</th>
+                            <th class="p-2 shadow text-center">SKU</th>
+                            <th class="p-2 shadow text-center">Nombre</th>
+                            <th class="p-2 shadow text-center">Costo</th>
+                            <th class="p-2 shadow text-center">Inventario</th>
+                            <th class="p-2 shadow text-center">Descripción</th>
+                            <th class="p-2 shadow text-center" id="herramientas">Herramientas</th>
                         </tr>
                     </thead>
                     <tbody id="tableBody">
