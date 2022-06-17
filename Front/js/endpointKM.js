@@ -1,10 +1,18 @@
 
+/* API de la lista de productos */
 const APIListaProd = 'https://localhost:44363/api/inventario/listaProductos';
+
+/* Selectores */
 const tablaProductos = document.querySelector('#tableBody');
 const herramientas = document.querySelector('#herramientas');
+const tipoPrenda = document.querySelector('#tipoPrenda');
+const selectorTipoProducto = document.querySelector('#filtroTipoProducto');
+
+/* Array de almacenamiento para cambio de estado de productos */
 var listProductos = [];
 
 
+/* Objeto que va a backend para que el servidor mande la lista de productos */
 var data = {
     "nombre": "",
     "tipo": 0,
@@ -12,6 +20,7 @@ var data = {
     "color": 0
 };
 
+/* Fetch de lista de productos */
 fetch(APIListaProd, {
   method: 'POST',
   body: JSON.stringify(data),
@@ -26,8 +35,51 @@ fetch(APIListaProd, {
     /* imprimirSeleccion(); */
 });
 
+
+function imprimirFiltro() {
+    const APIFiltroTipoPrenda = 'https://localhost:44363/api/inventario/catTipoPrenda';
+
+    var tipoPrenda = {
+        "nombre": "",
+        "tipo": 0
+    }
+
+    fetch(APIFiltroTipoPrenda, {
+        method: 'POST',
+        body: JSON.stringify(tipoPrenda),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(res => res.json())
+        .catch(error => console.error('Error: ', error))
+        .then(response => {
+            const listaTipoPrendas = response;
+
+            for (var i = 0; i < listaTipoPrendas.length; i++){
+                const { intTipoProductoID,vchNombreTipoProducto } = listaTipoPrendas[i];
+                const seleccionTipoPrenda = document.createElement('option');
+                const seleccionTipoProBusqueda = document.createElement('option');
+
+
+                seleccionTipoPrenda.innerHTML = `
+                <option onclick="obtenerID(${intTipoProductoID})" value="${intTipoProductoID}">${vchNombreTipoProducto} </option>
+                `;
+            
+                seleccionTipoProBsq.innerHTML = `
+                <option onclick="obtenerID(${intTipoProductoID})" value="${intTipoProductoID}">${vchNombreTipoProducto} </option>
+                `;
+
+                tipoPrenda.appendChild(seleccionTipoPrenda);
+                selectorTipoProducto.appendChild(seleccionTipoProBusqueda);
+            }
+    })
+}
+
+
+/* Función que imprime la respuesta de servidor, en este caso la de la listas de productos */
 function imprimirHtml(resApi) {
-  const resListaProd = resApi
+    const resListaProd = resApi;
   for (let i = 0; i < resListaProd.length; i++){
     const tr = document.createElement('tr');
     const { intProductoID, vchSKUProducto, vchNombreProducto, decCostoProducto, intStockProducto, bitEstadoProducto, vchDescripcionProducto } = resListaProd[i];
@@ -66,3 +118,35 @@ function imprimirHtml(resApi) {
     tablaProductos.appendChild(tr);
   }
 }
+
+/* Funcion de limpiar el html, dejar la tabla vacia */
+function limpiarHtml() {
+    tablaProductos.innerHTML = '';
+}
+
+/* Función para filtro de busqueda */
+function inputFiltro() {
+    limpiarHtml();
+    const inputTerminoBusqueda = document.querySelector('#search').value;
+    const idFiltroTipoProducto = document.querySelector('#filtroTipoProducto');
+    const id = idFiltroTipoProducto.selectedIndex;
+
+    var filtro = {
+        "nombre": inputTerminoBusqueda,
+        "tipo" : id
+    }
+
+    fetch(API, {
+            method: 'POST',
+            body: JSON.stringify(filtro),
+            headers:{
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(res => res.json())
+        .catch(error => console.error('Error: ', error))
+        .then(response => {
+        imprimirHtml(response);
+    });
+}
+
