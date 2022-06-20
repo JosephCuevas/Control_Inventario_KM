@@ -32,7 +32,7 @@ fetch(APIListaProd, {
 .then(response => {
     imprimirHtml(response);
     listProductos = response;
-    /* imprimirSeleccion(); */
+    imprimirSeleccion();
 });
 
 
@@ -136,7 +136,7 @@ function inputFiltro() {
         "tipo" : id
     }
 
-    fetch(API, {
+    fetch(APIListaProd, {
             method: 'POST',
             body: JSON.stringify(filtro),
             headers:{
@@ -150,3 +150,98 @@ function inputFiltro() {
     });
 }
 
+
+function imprimirSeleccion() {
+
+    const APITipoP = 'https://localhost:44363/api/inventario/catTipoPrenda';
+    const APITalla = 'https://localhost:44363/api/inventario/catTallas';
+    const APIColor = 'https://localhost:44363/api/inventario/catColores';
+    const selectFiltroTipo = document.querySelector('#filtroTipoProducto');
+    const selectTipoP = document.querySelector('#selectTipoP');
+    const selectTallaP = document.querySelector('#tallaPrenda');
+    const selectColorP = document.querySelector('#colorPrenda');
+
+    var tipoP = {
+        "nombre": "",
+        "tipo": 0,
+        "talla": 0,
+        "color": 0
+    }
+
+    /* FETCH DE TIPO DE PRENDA */
+    fetch(APITipoP, {
+            method: 'POST',
+            body: JSON.stringify(tipoP),
+            headers:{
+            'Content-Type': 'application/json'
+        }
+    }).then(res => res.json())
+        .catch(error => console.error("Error: ", error))
+        .then(response => {
+
+        
+            for (var i = 0; i < response.length; i++){
+                const { intTipoPrendaID, vchNombreTipoPrenda} = response[i];
+                const selectTipo = document.createElement('option');
+                const selectTipoPrenda = document.createElement('option');
+
+                selectTipo.innerHTML = `
+                    <option onclick="obtenerID(${intTipoPrendaID})" value="${intTipoPrendaID}">${vchNombreTipoPrenda} </option>
+                `;
+                selectTipoPrenda.innerHTML = `
+                    <option onclick="obtenerID(${intTipoPrendaID})" value="${intTipoPrendaID}">${vchNombreTipoPrenda} </option>
+                `;
+
+                selectFiltroTipo.appendChild(selectTipo);
+                selectTipoP.appendChild(selectTipoPrenda);
+            }
+        })
+    
+    /* FETCH DE TALLA */
+    fetch(APITalla, {
+            method: 'POST',
+            body: JSON.stringify(tipoP),
+            headers:{
+            'Content-Type': 'application/json'
+        }
+    }).then(res => res.json())
+        .catch(error => console.error("Error: ", error))
+        .then(response => {
+
+        
+            for (var i = 0; i < response.length; i++){
+                const { intTallaID, vchNombreTalla} = response[i];
+                const selectTalla = document.createElement('option');
+                
+
+                selectTalla.innerHTML = `
+                    <option onclick="obtenerID(${intTallaID})" value="${intTallaID}">${vchNombreTalla} </option>
+                `;
+
+                selectTallaP.appendChild(selectTalla);
+            }
+        })
+    
+    /* FETCH DE COLOR */
+    fetch(APIColor, {
+            method: 'POST',
+            body: JSON.stringify(tipoP),
+            headers:{
+            'Content-Type': 'application/json'
+        }
+    }).then(res => res.json())
+        .catch(error => console.error("Error: ", error))
+        .then(response => {
+
+            for (var i = 0; i < response.length; i++){
+                const { intColorID, vchNombreColor} = response[i];
+                const selectColor = document.createElement('option');
+
+                selectColor.innerHTML = `
+                    <option onclick="obtenerID(${intColorID})" value="${intColorID}">${vchNombreColor} </option>
+                `;
+
+                selectColorP.appendChild(selectColor);
+            }
+    })
+}
