@@ -239,7 +239,7 @@ function enviarDatosBD(e){
                     limpiarFormulario();
                 }
                 else{
-                    alert("Existe un error al crear el producto.")
+                    alert("Existe un error al editar el producto.")
                 }
         });
     }
