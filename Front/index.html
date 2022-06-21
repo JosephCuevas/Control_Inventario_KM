@@ -76,7 +76,7 @@
                     </div>
                     <!--============= FORM  ============-->
                     <form class="bg-transparent text-white shadow-md rounded px-4 pt-1 pb-2 mb-2 formulario" action=""
-                        id="formulario">
+                        id="formularioNuevoP">
                         <div class="mb-2">
                             <label class="block text-sm mb-2" for="">Tipo de Prenda</label>
                             <select class="form-select rounded text-gray-800 block w-full mt-1" id="selectTipoP"
@@ -86,14 +86,14 @@
                         </div>
                         <div class="mb-2">
                             <label class="block text-sm mb-2" for="">Talla</label>
-                            <select class="form-select rounded text-gray-800 block w-full mt-1" id="tallaPrenda"
+                            <select class="form-select rounded text-gray-800 block w-full mt-1" id="selectTallaPrenda"
                                 required>
                                 <option value="0" selected>Seleccionar</option>
                             </select>
                         </div>
                         <div class="mb-2">
                             <label class="block text-sm mb-2" for="">Color</label>
-                            <select class="form-select rounded text-gray-800 block w-full mt-1" id="colorPrenda"
+                            <select class="form-select rounded text-gray-800 block w-full mt-1" id="selectColorPrenda"
                                 required>
                                 <option value="0" selected>Seleccionar</option>
                             </select>
@@ -126,11 +126,11 @@
                         </div>
                         <div class="mb-2">
                             <label class="block text-sm mb-2" for="">Descripción</label>
-                            <textarea class="shadow appearance-none w-full py-0.8 px-2 text-sm text-gray-700 border rounded leading-tight focus-outline-none focus:shadow-outline" name="descripcion" rows="4" cols="19" placeholder="Descripción"></textarea>
+                            <textarea class="shadow appearance-none w-full py-0.8 px-2 text-sm text-gray-700 border rounded leading-tight focus-outline-none focus:shadow-outline" name="descripcion" rows="4" cols="19" placeholder="Descripción" id="descripcionProducto"></textarea>
                         </div>
                         <div class="mb-2">
                             <label class="block text-sm mb-2" for="">Imagen (link)</label>
-                            <input class="shadow appearance-none w-full py-0.8 px-2 text-sm text-gray-700 border rounded leading-tight focus-outline-none focus:shadow-outline" type="text" size="15" maxlength="500" placeholder="Imagen" name="imagen">
+                            <input class="shadow appearance-none w-full py-0.8 px-2 text-sm text-gray-700 border rounded leading-tight focus-outline-none focus:shadow-outline" type="text" size="15" maxlength="500" placeholder="Imagen" name="imagen" id="imagenProducto">
                         </div>
                         <div class="flex item-center justify-around m-4">
                             <button
