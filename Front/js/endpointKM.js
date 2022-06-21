@@ -88,7 +88,7 @@ function imprimirHtml(resApi) {
     const resListaProd = resApi;
   for (let i = 0; i < resListaProd.length; i++){
     const tr = document.createElement('tr');
-    const { intProductoID, vchSKUProducto, vchNombreProducto, decCostoProducto, intStockProducto, bitEstadoProducto, vchDescripcionProducto } = resListaProd[i];
+      const { intProductoID, vchSKUProducto, vchNombreProducto, decCostoProducto, intStockProducto, bitEstadoProducto, vchDescripcionProducto } = resListaProd[i];
 
     tr.innerHTML = `
         <td class="shadow px-4">
@@ -278,3 +278,28 @@ function imprimirSelectores() {
             imprimirHtml(response);
     });
 }
+
+function cambioEstado(check, id) {
+    const APICambioEstado = 'https://localhost:44363/api/inventario/actualizaEstadoProducto';
+
+    var idP = {
+        "productoID": id
+    }
+
+    fetch(APICambioEstado, {
+    method: 'POST',
+    body: JSON.stringify(idP),
+    headers:{
+        'Content-Type': 'application/json'
+    }
+    }).then(res => res.json())
+    .catch(error => console.error('Error:', error))
+    .then(response => {
+        if(response.valido){
+            alert("Cambio de producto correcto");
+        } else {
+            alert("Error, no se realizo el cambio de estado")
+        }
+    });
+}
+
