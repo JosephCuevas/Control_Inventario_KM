@@ -7,6 +7,12 @@ const tablaProductos = document.querySelector('#tableBody');
 const herramientas = document.querySelector('#herramientas');
 const tipoPrenda = document.querySelector('#tipoPrenda');
 const selectorTipoProducto = document.querySelector('#filtroTipoProducto');
+const formBusqueda = document.querySelector('#formBusqueda');
+
+formBusqueda.addEventListener('submit', (e) => {
+    e.preventDefault();
+    imprimirSelectores();
+})
 
 /* Array de almacenamiento para cambio de estado de productos */
 var listProductos = [];
@@ -150,7 +156,7 @@ function inputFiltro() {
     });
 }
 
-
+/* Imprime la lista de selectores */
 function imprimirSeleccion() {
 
     const APITipoP = 'https://localhost:44363/api/inventario/catTipoPrenda';
@@ -244,4 +250,31 @@ function imprimirSeleccion() {
                 selectColorP.appendChild(selectColor);
             }
     })
+}
+
+function imprimirSelectores() {
+    limpiarHtml();
+
+    const textBusqueda = document.querySelector('#search').value;
+    const tipoPrenBusqueda = document.querySelector('#filtroTipoProducto');
+    const id = tipoPrenBusqueda.selectedIndex;
+
+    var busqueda = {
+        "nombre": textBusqueda,
+        "tipo": id,
+        "talla": 0,
+        "color":0
+    }
+    
+    fetch(APIListaProd, {
+        method: 'POST',
+        body: JSON.stringify(busqueda),
+        headers:{
+                'Content-Type': 'application/json'
+        }
+        }).then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(response => {
+            imprimirHtml(response);
+    });
 }
