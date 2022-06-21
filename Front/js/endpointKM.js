@@ -303,3 +303,20 @@ function cambioEstado(check, id) {
     });
 }
 
+function enviarDatosBD(e) {
+    e.preventDefault();
+
+    const APIAgregar = 'https://localhost:44363/api/inventario/agregarProducto';
+    const APIEditar = 'https://localhost:44363/api/inventario/actualizaProducto';
+
+    const selectTipoP = document.querySelector('#selectTipoP');
+    const selectTallaPrenda = document.querySelector('#selectTallaPrenda');
+    const selectColorPrenda = document.querySelector('#selectColorPrenda');
+    const nombreProducto = document.querySelector('#nombreProducto').value;
+    const skuProducto = document.querySelector('#skuProducto').value;
+    const costoProducto = document.querySelector('#costoProducto').value;
+    const inventarioProducto = document.querySelector('#inventarioProducto').value;
+    const descripcionProducto = document.querySelector('#descripcionProducto').value;
+    const imagenProducto = document.querySelector('#imagenProducto').value;
+
+}
