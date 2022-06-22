@@ -128,7 +128,7 @@ function imprimirHtml(resApi) {
             ${vchDescripcionProducto}
         </label></td>
         <td class="shadow px-8 inline-flex items-center">
-            <button type="button" onclick="editarItem(this,${intProductoID})"
+            <button type="button" onclick="editarProducto(this,${intProductoID})"
                         class="flex py-1 px-2 text-xs text-center text-white bg-blue-500 rounded-lg hover:bg-blue-700">
                         Editar</button>
         </td>
@@ -339,7 +339,7 @@ function enviarDatosBD() {
                 "intColorID": selectColorPrenda,
                 "vchNombreProducto": nombreProducto,
                 "vchSKUProducto": skuProducto,
-                "ddecCostoProducto": costoProducto,
+                "decCostoProducto": costoProducto,
                 "intStockProducto": inventarioProducto,
                 "vchDescripcionProducto": descripcionProducto,
                 "vchImagenProducto": imagenProducto
@@ -371,7 +371,7 @@ function enviarDatosBD() {
                     "intColorID": selectColorPrenda,
                     "vchNombreProducto": nombreProducto,
                     "vchSKUProducto": skuProducto,
-                    "ddecCostoProducto": costoProducto,
+                    "decCostoProducto": costoProducto,
                     "intStockProducto": inventarioProducto,
                     "vchDescripcionProducto": descripcionProducto,
                     "vchImagenProducto": imagenProducto
@@ -419,4 +419,30 @@ function limpiarFormulario() {
     descripcionProducto.value = '';
     const imagenProducto = document.querySelector('#imagenProducto');
     imagenProducto.value = '';
+}
+
+function editarProducto(check, intProductoID) {
+    const productos = listProductos.filter(p => p.intProductoID == intProductoID);
+    const producto = productos[0];
+
+    const selectTipoPrenda = document.querySelector('#selectTipoP');
+    selectTipoPrenda.selectedIndex = producto.intTipoPrendaID;
+    const selectTallaPrenda = document.querySelector('#selectTallaP');
+    selectTallaPrenda.selectedIndex = producto.intTallaID;
+    const selectColorPrenda = document.querySelector('#selectColorP');
+    selectColorPrenda.selectedIndex = producto.intColorID;
+    const nombreProducto = document.querySelector('#nombreProducto');
+    nombreProducto.value = producto.vchNombreProducto;
+    const skuProducto = document.querySelector('#skuProducto');
+    skuProducto.value = producto.vchSKUProducto;
+    const costoProducto = document.querySelector('#costoProducto');
+    costoProducto.value = producto.decCostoProducto;
+    const inventarioProducto = document.querySelector('#inventarioProducto');
+    inventarioProducto.value = producto.intStockProducto;
+    const descripcionProducto = document.querySelector('#descripcionProducto');
+    descripcionProducto.value = producto.vchDescripcionProducto;
+    const imagenProducto = document.querySelector('#imagenProducto');
+    imagenProducto.value = producto.vchImagenProducto;
+
+    productoSeleccionado = producto.intProductoID;
 }
