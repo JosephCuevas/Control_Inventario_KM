@@ -269,8 +269,8 @@ function enviarDatosBD(e){
                     alert("Existe un error al crear el producto.")
                 }
         });
-        }   
-    }
+    }   
+}
 
 function updateValue(e) {
   log.textContent = e.target.value;
