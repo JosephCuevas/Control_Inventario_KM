@@ -8,14 +8,27 @@ const herramientas = document.querySelector('#herramientas');
 const tipoPrenda = document.querySelector('#tipoPrenda');
 const selectorTipoProducto = document.querySelector('#filtroTipoProducto');
 const formBusqueda = document.querySelector('#formBusqueda');
+const formularioNuevoP = document.querySelector('#formularioNuevoP');
+const btnLimpiar = document.querySelector('#btnLimpiar');
 
 formBusqueda.addEventListener('submit', (e) => {
     e.preventDefault();
     imprimirSelectores();
-})
+});
+
+formularioNuevoP.addEventListener('submit', (e) => {
+    e.preventDefault();
+    enviarDatosBD();
+});
+
+btnLimpiar.addEventListener('click', (e) => {
+    e.preventDefault();
+    limpiarFormulario();
+});
 
 /* Array de almacenamiento para cambio de estado de productos */
 var listProductos = [];
+var productoSeleccionado = 0;
 
 
 /* Objeto que va a backend para que el servidor mande la lista de productos */
@@ -112,7 +125,7 @@ function imprimirHtml(resApi) {
             ${intStockProducto} pz
         </label></td>
         <td class="shadow px-4 text-center"><label class="block">
-            ${vchDescripcionProducto} pz
+            ${vchDescripcionProducto}
         </label></td>
         <td class="shadow px-8 inline-flex items-center">
             <button type="button" onclick="editarItem(this,${intProductoID})"
@@ -164,8 +177,8 @@ function imprimirSeleccion() {
     const APIColor = 'https://localhost:44363/api/inventario/catColores';
     const selectFiltroTipo = document.querySelector('#filtroTipoProducto');
     const selectTipoP = document.querySelector('#selectTipoP');
-    const selectTallaP = document.querySelector('#tallaPrenda');
-    const selectColorP = document.querySelector('#colorPrenda');
+    const selectTallaP = document.querySelector('#selectTallaP');
+    const selectColorP = document.querySelector('#selectColorP');
 
     var tipoP = {
         "nombre": "",
@@ -185,7 +198,6 @@ function imprimirSeleccion() {
         .catch(error => console.error("Error: ", error))
         .then(response => {
 
-        
             for (var i = 0; i < response.length; i++){
                 const { intTipoPrendaID, vchNombreTipoPrenda} = response[i];
                 const selectTipo = document.createElement('option');
@@ -303,15 +315,13 @@ function cambioEstado(check, id) {
     });
 }
 
-function enviarDatosBD(e) {
-    e.preventDefault();
-
+function enviarDatosBD() {
     const APIAgregar = 'https://localhost:44363/api/inventario/agregarProducto';
     const APIEditar = 'https://localhost:44363/api/inventario/actualizaProducto';
 
-    const selectTipoP = document.querySelector('#selectTipoP');
-    const selectTallaPrenda = document.querySelector('#selectTallaPrenda');
-    const selectColorPrenda = document.querySelector('#selectColorPrenda');
+    const selectTipoPrenda = document.querySelector('#selectTipoP').selectedIndex;
+    const selectTallaPrenda = document.querySelector('#selectTallaP').selectedIndex;
+    const selectColorPrenda = document.querySelector('#selectColorP').selectedIndex;
     const nombreProducto = document.querySelector('#nombreProducto').value;
     const skuProducto = document.querySelector('#skuProducto').value;
     const costoProducto = document.querySelector('#costoProducto').value;
@@ -319,4 +329,94 @@ function enviarDatosBD(e) {
     const descripcionProducto = document.querySelector('#descripcionProducto').value;
     const imagenProducto = document.querySelector('#imagenProducto').value;
 
+    /* const id = selectTipoPrenda.options[selectTipoPrenda.selectedIndex].value; */
+
+    var nuevoProducto = {};
+        if(productoSeleccionado > 0){ nuevoProducto = {"producto":  {
+                "intProductoID": productoSeleccionado,
+                "intTipoPrendaID": selectTipoPrenda,
+                "intTallaID": selectTallaPrenda,
+                "intColorID": selectColorPrenda,
+                "vchNombreProducto": nombreProducto,
+                "vchSKUProducto": skuProducto,
+                "ddecCostoProducto": costoProducto,
+                "intStockProducto": inventarioProducto,
+                "vchDescripcionProducto": descripcionProducto,
+                "vchImagenProducto": imagenProducto
+            }
+        }; 
+        fetch(APIEditar, {
+            method: 'POST',
+            body: JSON.stringify(nuevoProducto),
+            headers:{
+                'Content-Type': 'application/json'
+            }
+        }).then(res => res.json())
+            .catch(error => console.error('Error:', error))
+            .then(response => {
+                if(response.valido){
+                    alert("Producto actualizado correctamente");
+                    window.location.reload();
+                    limpiarFormulario();
+                }
+                else{
+                    alert("Existe un error al editar el producto.")
+                }
+        });
+    }
+        else{
+            nuevoProducto = {"producto":  {
+                    "intTipoPrendaID": selectTipoPrenda,
+                    "intTallaID": selectTallaPrenda,
+                    "intColorID": selectColorPrenda,
+                    "vchNombreProducto": nombreProducto,
+                    "vchSKUProducto": skuProducto,
+                    "ddecCostoProducto": costoProducto,
+                    "intStockProducto": inventarioProducto,
+                    "vchDescripcionProducto": descripcionProducto,
+                    "vchImagenProducto": imagenProducto
+                }
+        };
+        fetch(APIAgregar, {
+            method: 'POST',
+            body: JSON.stringify(nuevoProducto),
+            headers:{
+                'Content-Type': 'application/json'
+            }
+        }).then(res => res.json())
+            .catch(error => console.error('Error:', error))
+            .then(response => {
+                if(response.valido){
+                    alert("Producto creado correctamente");
+                    window.location.reload();
+                    limpiarFormulario();
+                }
+                else{
+                    alert("Existe un error al crear el producto.")
+                }
+        });
+    }
+}
+
+function limpiarFormulario() {
+    productoSeleccionado = 0;
+
+    const selectTipoPrenda = document.querySelector('#selectTipoP');
+    selectTipoPrenda.selectedIndex = 0;
+    const selectTallaPrenda = document.querySelector('#selectTallaP');
+    selectTallaPrenda.selectedIndex = 0;
+    const selectColorPrenda = document.querySelector('#selectColorP');
+    selectColorPrenda.selectedIndex = 0;
+    const nombreProducto = document.querySelector('#nombreProducto');
+    nombreProducto.value = '';
+    const skuProducto = document.querySelector('#skuProducto');
+    skuProducto.value = '';
+    const costoProducto = document.querySelector('#costoProducto');
+    costoProducto.value = 0;
+    const inventarioProducto = document.querySelector('#inventarioProducto');
+    inventarioProducto.value = '';
+    const descripcionProducto = document.querySelector('#descripcionProducto');
+    descripcionProducto.value = '';
+    const imagenProducto = document.querySelector('#imagenProducto');
+    imagenProducto.value = '';
 }
