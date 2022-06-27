@@ -1,4 +1,4 @@
-const APIL = 'https://localhost:44327/api/acceso/loginacceso';
+const APIL = 'https://localhost:44363/api/acceso/loginAcceso';
 
 const formLogin = document.querySelector('#formLogin');
 
@@ -17,13 +17,13 @@ function logear(e){
     fetch(APIL, {
         method: 'POST',
         body: JSON.stringify(data),
-        headers:{
+        headers: {
             'Content-Type': 'application/json'
         }
-        }).then(res => res.json())
+    }).then(res => res.json())
         .catch(error => console.error('Error:', error))
         .then(response => {
-            if(response.acceso){
+            if (response.acceso) {
                 localStorage.setItem("usuario", response.usuario.usuario);
                 localStorage.setItem("usuarioid", response.usuario.id);
                 localStorage.setItem("usuarionombre", response.usuario.nombre);
@@ -31,7 +31,7 @@ function logear(e){
                 console.log("Correcto");
             }
             else{
-                alert('Datos inconrectos por favor intente de nuevo')
+                alert('Datos inconrectos por favor intente de nuevo');
             }
         });
 }

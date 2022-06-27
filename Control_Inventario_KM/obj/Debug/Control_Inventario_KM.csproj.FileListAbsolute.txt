@@ -212,8 +212,8 @@ C:\Users\Sistemas\Desktop\Control_Inventario_KM\Control_Inventario_KM\bin\Micros
 C:\Users\Sistemas\Desktop\Control_Inventario_KM\Control_Inventario_KM\bin\es\System.Net.Http.Formatting.resources.dll
 C:\Users\Sistemas\Desktop\Control_Inventario_KM\Control_Inventario_KM\bin\es\System.Web.Http.resources.dll
 C:\Users\Sistemas\Desktop\Control_Inventario_KM\Control_Inventario_KM\bin\es\System.Web.Http.WebHost.resources.dll
-C:\Users\Sistemas\Desktop\Control_Inventario_KM\Control_Inventario_KM\obj\Debug\Control_Inventario_KM.csproj.AssemblyReference.cache
 C:\Users\Sistemas\Desktop\Control_Inventario_KM\Control_Inventario_KM\obj\Debug\Control_Inventario_KM.csproj.CoreCompileInputs.cache
 C:\Users\Sistemas\Desktop\Control_Inventario_KM\Control_Inventario_KM\obj\Debug\Control_Inventario_KM.csproj.CopyComplete
 C:\Users\Sistemas\Desktop\Control_Inventario_KM\Control_Inventario_KM\obj\Debug\Control_Inventario_KM.dll
 C:\Users\Sistemas\Desktop\Control_Inventario_KM\Control_Inventario_KM\obj\Debug\Control_Inventario_KM.pdb
+C:\Users\Sistemas\Desktop\Control_Inventario_KM\Control_Inventario_KM\obj\Debug\Control_Inventario_KM.csproj.AssemblyReference.cache
