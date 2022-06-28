@@ -252,5 +252,44 @@ namespace Control_Inventario_KM.Controllers
                 }
             }
         }
+
+        /* == Actualiza inventario o stock == */
+        [HttpPost]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        [Route("actualizaInventario")]
+
+        public object actualizaInventario([FromBody] JObject data)
+        {
+            //{
+            //  "producto":{
+            //    "intProductoID":1,
+            //    "intStockProducto":2
+            //   }
+            //}
+            CAT_Productos producto = data["producto"].ToObject<CAT_Productos>();
+            using (var conexion = new Control_Inventario_KMEntities())
+            {
+                if (conexion.CAT_Productos.Any(p => p.intProductoID == producto.intProductoID))
+                {
+                    var productoBase = conexion.CAT_Productos.FirstOrDefault(p => p.intProductoID == producto.intProductoID);
+                    productoBase.intStockProducto = producto.intStockProducto;
+                    productoBase.datFechaAltaProducto = DateTime.Now;
+                    conexion.SaveChanges();
+                    return new
+                    {
+                        valido = true,
+                        Detalle = "Producto Actualizado Correctamente"
+                    };
+                }
+                else
+                {
+                    return new
+                    {
+                        valido = false,
+                        Descripcion = "No se puede actualizar el inventario, no existe el producto"
+                    };
+                }
+            }
+        }
     }
 }

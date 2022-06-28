@@ -140,8 +140,8 @@ else {
         <td class="shadow px-4 text-center"><label class="block">
             $ ${decCostoProducto}
         </label></td>
-        <td class="shadow px-4 text-center"><label class="block">
-            ${intStockProducto} pz
+        <td class="shadow px-4 text-center"><label class="block w-30">
+            <input class="bg-gray-800 w-20 text-center" type="number" name="" id="cantInventario" onchange="cambioInventario(this,${intProductoID})" value="${intStockProducto}">
         </label></td>
         <td class="shadow px-4 text-center"><label class="block">
             ${vchDescripcionProducto}
@@ -334,6 +334,36 @@ else {
             });
     }
 
+    function cambioInventario(check, id) {
+        const APICambioInventario = 'https://localhost:44363/api/inventario/actualizaInventario';
+        const cantidadInventario = document.querySelector('#cantInventario').value;
+
+        
+
+        var idP = {
+            "producto": {
+                "intProductoID": id,
+                "intStockProducto": cantidadInventario
+            }
+        }
+
+            fetch(APICambioInventario, {
+                method: 'POST',
+                body: JSON.stringify(idP),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(res => res.json())
+            .catch(error => console.error('Error:', error))
+            .then(response => {
+                if (response.valido) {
+                    alert("Cambio de producto correcto");
+                } else {
+                    alert("Error, no se realizo el cambio de estado")
+                }
+            });
+    }
+
     function enviarDatosBD() {
         const APIAgregar = 'https://localhost:44363/api/inventario/agregarProducto';
         const APIEditar = 'https://localhost:44363/api/inventario/actualizaProducto';
@@ -468,4 +498,4 @@ else {
 
         productoSeleccionado = producto.intProductoID;
     }
-}
+} // Fin del else
