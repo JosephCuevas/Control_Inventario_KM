@@ -13,12 +13,11 @@ else {
 
     /* Selectores */
     const tablaProductos = document.querySelector('#tableBody');
-    const herramientas = document.querySelector('#herramientas');
-    const tipoPrenda = document.querySelector('#tipoPrenda');
     const selectorTipoProducto = document.querySelector('#filtroTipoProducto');
     const formBusqueda = document.querySelector('#formBusqueda');
     const formularioNuevoP = document.querySelector('#formularioNuevoP');
     const btnLimpiar = document.querySelector('#btnLimpiar');
+    const saludarUsuario = document.querySelector('#user');
 
     formBusqueda.addEventListener('submit', (e) => {
         e.preventDefault();
