@@ -216,3 +216,4 @@ C:\Users\Sistemas\Desktop\Control_Inventario_KM\Control_Inventario_KM\obj\Debug\
 C:\Users\Sistemas\Desktop\Control_Inventario_KM\Control_Inventario_KM\obj\Debug\Control_Inventario_KM.csproj.CopyComplete
 C:\Users\Sistemas\Desktop\Control_Inventario_KM\Control_Inventario_KM\obj\Debug\Control_Inventario_KM.dll
 C:\Users\Sistemas\Desktop\Control_Inventario_KM\Control_Inventario_KM\obj\Debug\Control_Inventario_KM.pdb
+C:\Users\Sistemas\Desktop\Control_Inventario_KM\Control_Inventario_KM\obj\Debug\Control_Inventario_KM.csproj.AssemblyReference.cache

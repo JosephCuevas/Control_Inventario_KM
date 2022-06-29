@@ -5,7 +5,7 @@ const usuarioLogNombre = localStorage.getItem("usuarionombre");
 
 if (usuarioLogID === 0 && usuarioLogID === null) {
     alert("Favor de iniciar sesion");
-    window.location.replace('./login.html');
+    window.location.replace("./login.html");
 }
 else {
     /* API de la lista de productos */
@@ -33,6 +33,7 @@ else {
         e.preventDefault();
         limpiarFormulario();
     });
+
 
     /* Array de almacenamiento para cambio de estado de productos */
     var listProductos = [];
@@ -121,6 +122,7 @@ else {
         for (let i = 0; i < resListaProd.length; i++) {
             const tr = document.createElement('tr');
             const { intProductoID, vchSKUProducto, vchNombreProducto, decCostoProducto, intStockProducto, bitEstadoProducto, vchDescripcionProducto } = resListaProd[i];
+            console.log(intStockProducto+'imprimir');
 
             tr.innerHTML = `
         <td class="shadow px-4">
@@ -141,14 +143,17 @@ else {
             $ ${decCostoProducto}
         </label></td>
         <td class="shadow px-4 text-center"><label class="block w-30">
-            <input class="bg-gray-800 w-20 text-center" type="number" name="" id="cantInventario" onchange="cambioInventario(this,${intProductoID})" value="${intStockProducto}">
+            <input class="bg-gray-800 w-20 text-center" type="number" name="" id="cantInventario" value="${intStockProducto}">
         </label></td>
         <td class="shadow px-4 text-center"><label class="block">
             ${vchDescripcionProducto}
         </label></td>
-        <td class="shadow px-8 inline-flex items-center">
+        <td class="shadow px-8 inline-flex items-center" id="botones">
             <button type="button" onclick="editarProducto(this,${intProductoID})"
                         class="flex py-1 px-2 text-xs text-center text-white bg-blue-500 rounded-lg hover:bg-blue-700">
+                        Editar</button>
+            <button type="button" onclick="cambioInventario(this,${intProductoID})"
+                        class="flex py-1 px-2 pl-2 text-xs text-center text-white bg-blue-500 rounded-lg hover:bg-blue-700">
                         Editar</button>
         </td>
         
@@ -336,20 +341,21 @@ else {
 
     function cambioInventario(check, id) {
         const APICambioInventario = 'https://localhost:44363/api/inventario/actualizaInventario';
-        const cantidadInventario = document.querySelector('#cantInventario').value;
+        const cantidadInventario = Number(document.querySelector('#cantInventario').value);
 
-        
+        console.log(id);
+        console.log(cantidadInventario);
 
-        var idP = {
+        var idPS = {
             "producto": {
                 "intProductoID": id,
                 "intStockProducto": cantidadInventario
             }
         }
 
-            fetch(APICambioInventario, {
+             fetch(APICambioInventario, {
                 method: 'POST',
-                body: JSON.stringify(idP),
+                body: JSON.stringify(idPS),
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -359,9 +365,9 @@ else {
                 if (response.valido) {
                     alert("Cambio de producto correcto");
                 } else {
-                    alert("Error, no se realizo el cambio de estado")
+                    alert("Error, no se realizo el cambio de inventario");
                 }
-            });
+            }); 
     }
 
     function enviarDatosBD() {
