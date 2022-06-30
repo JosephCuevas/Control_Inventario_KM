@@ -125,39 +125,39 @@ else {
             console.log(intStockProducto+'imprimir');
 
             tr.innerHTML = `
-        <td class="shadow px-4">
-            <div class="flex justify-center">
-                <div class="block">
-                    <div id="ac">
-                    ${bitEstadoProducto === false ? `<input type="checkbox" class="form-checkbox" id="boolEstatus" id="boolEstatus" onclick="cambioEstado(this,${intProductoID})"> ` : `<input type="checkbox" class="form-checkbox" id="boolEstatus" onclick="cambioEstado(this,${intProductoID})" checked>`}
-                                
-            </div>
-        </td>
-        <td class="shadow px-4 text-center"><label class="block">
-            ${vchSKUProducto}
-        </label></td>
-        <td class="shadow px-4 text-center"><label class="block">
-            ${vchNombreProducto}
-        </label></td>
-        <td class="shadow px-4 text-center"><label class="block">
-            $ ${decCostoProducto}
-        </label></td>
-        <td class="shadow px-4 text-center"><label class="block w-30">
-            <input class="bg-gray-800 w-20 text-center" type="number" name="" id="cantInventario" value="${intStockProducto}">
-        </label></td>
-        <td class="shadow px-4 text-center"><label class="block">
-            ${vchDescripcionProducto}
-        </label></td>
-        <td class="shadow px-8 inline-flex items-center" id="botones">
-            <button type="button" onclick="editarProducto(this,${intProductoID})"
-                        class="flex py-1 px-2 text-xs text-center text-white bg-blue-500 rounded-lg hover:bg-blue-700">
-                        Editar</button>
-            <button type="button" onclick="cambioInventario(this,${intProductoID})"
-                        class="flex py-1 px-2 pl-2 text-xs text-center text-white bg-blue-500 rounded-lg hover:bg-blue-700">
-                        Editar</button>
-        </td>
+            <td class="shadow px-4">
+                <div class="flex justify-center">
+                    <div class="block">
+                        <div id="ac">
+                        ${bitEstadoProducto === false ? `<input type="checkbox" class="form-checkbox" id="boolEstatus" id="boolEstatus" onclick="cambioEstado(this,${intProductoID})"> ` : `<input type="checkbox" class="form-checkbox" id="boolEstatus" onclick="cambioEstado(this,${intProductoID})" checked>`}
+                                    
+                </div>
+            </td>
+            <td class="shadow px-4 text-center"><label class="block">
+                ${vchSKUProducto}
+            </label></td>
+            <td class="shadow px-4 text-center"><label class="block">
+                ${vchNombreProducto}
+            </label></td>
+            <td class="shadow px-4 text-center"><label class="block">
+                $ ${decCostoProducto}
+            </label></td>
+            <td class="shadow px-4 text-center"><label class="block w-30">
+                ${intStockProducto} pz
+            </label></td>
+            <td class="shadow px-4 text-center"><label class="block">
+                ${vchDescripcionProducto}
+            </label></td>
+            <td class="shadow px-8 inline-flex items-center" id="botones">
+                <button type="button" onclick="editarProducto(this,${intProductoID})"
+                            class="flex py-1 px-2 text-xs text-center text-white bg-blue-500 rounded-lg hover:bg-blue-700">
+                            Editar</button>
+                <button type="button" onclick="cambioInventario(this,${intProductoID})"
+                            class="flex py-1 px-2 pl-2 text-xs text-center text-white bg-blue-500 rounded-lg hover:bg-blue-700">
+                            Guardar</button>
+            </td>
         
-    `
+            `
             tablaProductos.appendChild(tr);
         }
     }
@@ -339,36 +339,6 @@ else {
             });
     }
 
-    function cambioInventario(check, id) {
-        const APICambioInventario = 'https://localhost:44363/api/inventario/actualizaInventario';
-        const cantidadInventario = Number(document.querySelector('#cantInventario').value);
-
-        console.log(id);
-        console.log(cantidadInventario);
-
-        var idPS = {
-            "producto": {
-                "intProductoID": id,
-                "intStockProducto": cantidadInventario
-            }
-        }
-
-             fetch(APICambioInventario, {
-                method: 'POST',
-                body: JSON.stringify(idPS),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }).then(res => res.json())
-            .catch(error => console.error('Error:', error))
-            .then(response => {
-                if (response.valido) {
-                    alert("Cambio de producto correcto");
-                } else {
-                    alert("Error, no se realizo el cambio de inventario");
-                }
-            }); 
-    }
 
     function enviarDatosBD() {
         const APIAgregar = 'https://localhost:44363/api/inventario/agregarProducto';
