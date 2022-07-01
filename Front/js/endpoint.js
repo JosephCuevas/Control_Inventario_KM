@@ -273,7 +273,8 @@ function enviarDatosBD(e){
 }
 
 function updateValue(e) {
-  log.textContent = e.target.value;
+    log.textContent = e.target.value;
+    console.log(log.textContent);
 }
 
 function limpiarFormulario(){

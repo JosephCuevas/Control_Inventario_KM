@@ -122,7 +122,6 @@ else {
         for (let i = 0; i < resListaProd.length; i++) {
             const tr = document.createElement('tr');
             const { intProductoID, vchSKUProducto, vchNombreProducto, decCostoProducto, intStockProducto, bitEstadoProducto, vchDescripcionProducto } = resListaProd[i];
-            console.log(intStockProducto+'imprimir');
 
             tr.innerHTML = `
             <td class="shadow px-4">
@@ -143,7 +142,7 @@ else {
                 $ ${decCostoProducto}
             </label></td>
             <td class="shadow px-4 text-center"><label class="block w-30">
-                ${intStockProducto} pz
+                <input class="w-50 text-center bg-gray-800" type="number" id="cantInventarioN" onchange="editarInventario(this,${intProductoID})" value="${intStockProducto}"></input>
             </label></td>
             <td class="shadow px-4 text-center"><label class="block">
                 ${vchDescripcionProducto}
@@ -152,9 +151,9 @@ else {
                 <button type="button" onclick="editarProducto(this,${intProductoID})"
                             class="flex py-1 px-2 text-xs text-center text-white bg-blue-500 rounded-lg hover:bg-blue-700">
                             Editar</button>
-                <button type="button" onclick="cambioInventario(this,${intProductoID})"
-                            class="flex py-1 px-2 pl-2 text-xs text-center text-white bg-blue-500 rounded-lg hover:bg-blue-700">
-                            Guardar</button>
+                <button type="button" onclick="enviarDatosInvDB()"
+                            class="flex py-1 px-2 text-xs text-center text-white bg-blue-500 rounded-lg hover:bg-gray-700">
+                            Editar</button>
             </td>
         
             `
@@ -473,5 +472,48 @@ else {
         imagenProducto.value = producto.vchImagenProducto;
 
         productoSeleccionado = producto.intProductoID;
+    }
+
+    function editarInventario(check, intProductoID) {
+        const productos = listProductos.filter(p => p.intProductoID == intProductoID);
+        const producto = productos[0];
+
+        const nuevaCantInventario = document.querySelector('#cantInventarioN');
+        nuevaCantInventario.value = producto.intStockProducto;
+
+        productoSeleccionado = producto.intProductoID;
+        console.log(productoSeleccionado);
+    }
+
+    function enviarDatosInvDB() {
+        const APIEditInv = 'https://localhost:44363/api/inventario/actualizaInventario';
+
+        const nuevaCantInventario = document.querySelector('#cantInventarioN').value;
+
+        if (productoSeleccionado > 0) {
+            nuevaCantidad = {
+                "producto": {
+                    "intProductoID": productoSeleccionado,
+                    "intStockProducto": nuevaCantInventario
+                }
+            };
+            fetch(APIEditInv, {
+                method: 'POST',
+                body: JSON.stringify(nuevaCantidad),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(res => res.json())
+                .catch(error => console.error('Error:', error))
+                .then(response => {
+                    if (response.valido) {
+                        alert("Inventario de producto actualizado correctamente");
+                        window.location.reload();
+                    }
+                    else {
+                        alert("Existe un error al editar el inventario de producto.")
+                    }
+                });
+        }
     }
 } // Fin del else
