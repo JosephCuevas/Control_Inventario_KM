@@ -153,8 +153,8 @@ else {
                             class="flex py-1 px-2 text-xs text-center text-white bg-blue-500 rounded-lg hover:bg-blue-700">
                             Editar</button>
                 <button type="button" onclick="enviarDatosInvDB()"
-                            class="flex py-1 px-2 text-xs text-center text-white bg-blue-500 rounded-lg hover:bg-gray-700">
-                            Editar</button>
+                            class="flex py-1 px-2 ml-1 text-xs text-center text-white bg-blue-500 rounded-lg hover:bg-gray-700">
+                            Guardar</button>
             </td>
         
             `
