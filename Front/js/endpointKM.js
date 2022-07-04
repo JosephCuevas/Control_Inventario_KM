@@ -38,6 +38,7 @@ else {
     /* Array de almacenamiento para cambio de estado de productos */
     var listProductos = [];
     var productoSeleccionado = 0;
+    var nuevoInventario = 0;
 
     function salirLogout(){
         localStorage.removeItem('usuario');
@@ -142,7 +143,7 @@ else {
                 $ ${decCostoProducto}
             </label></td>
             <td class="shadow px-4 text-center"><label class="block w-30">
-                <input class="w-50 text-center bg-gray-800" type="number" id="cantInventarioN" onchange="editarInventario(this,${intProductoID})" value="${intStockProducto}"></input>
+                <input class="w-50 text-center bg-gray-800" type="number" id="cantInventarioN" name="${intProductoID}" onchange="editarInventario(this,${intProductoID})" value="${intStockProducto}"></input>
             </label></td>
             <td class="shadow px-4 text-center"><label class="block">
                 ${vchDescripcionProducto}
@@ -474,27 +475,31 @@ else {
         productoSeleccionado = producto.intProductoID;
     }
 
+    /* Funcion para obtener id y valor de cantidad de nuevo inventario de input */
     function editarInventario(check, intProductoID) {
         const productos = listProductos.filter(p => p.intProductoID == intProductoID);
         const producto = productos[0];
 
-        const nuevaCantInventario = document.querySelector('#cantInventarioN');
-        nuevaCantInventario.value = producto.intStockProducto;
-
+        const inputInventario = document.querySelectorAll('#cantInventarioN');
+        for (var i = 0; i < inputInventario.length; i++){
+            const inputSeleccionado = Number(inputInventario[i].getAttribute('name'));
+            if (inputSeleccionado == intProductoID) {
+                nuevoInventario = inputInventario[i].value;
+                producto.intStockProducto = nuevoInventario;
+            }
+        }
         productoSeleccionado = producto.intProductoID;
-        console.log(productoSeleccionado);
     }
 
+    /* Función para envíar los datos obtenidos anteriormente en editarInventario() */
     function enviarDatosInvDB() {
         const APIEditInv = 'https://localhost:44363/api/inventario/actualizaInventario';
-
-        const nuevaCantInventario = document.querySelector('#cantInventarioN').value;
 
         if (productoSeleccionado > 0) {
             nuevaCantidad = {
                 "producto": {
                     "intProductoID": productoSeleccionado,
-                    "intStockProducto": nuevaCantInventario
+                    "intStockProducto": nuevoInventario
                 }
             };
             fetch(APIEditInv, {
