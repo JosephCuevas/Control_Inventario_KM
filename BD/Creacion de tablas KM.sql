@@ -44,6 +44,7 @@ create table CAT_Productos
 	vchImagenProducto varchar(250) null,
 	bitEstadoProducto bit null,
 	datFechaAltaProducto datetime null,
+	intUsuarioAltaProducto int null,
 	constraint PK_CAT_Productos primary key (intProductoID)
 )
 
@@ -58,6 +59,10 @@ references CAT_Tallas (intTallaID)
 alter table CAT_Productos
 add constraint FK_Productos_CAT_Colores foreign key (intColorID)
 references CAT_Colores (intColorID)
+
+alter table CAT_Productos
+add constraint FK_Productos_CAT_Usuarios foreign key (intUsuarioAltaProducto)
+references CAT_Usuarios (intUsuarioID)
 
 go
 
@@ -187,3 +192,40 @@ create table DetalleInvEnt
 alter table DetalleInvEnt
 add constraint FK_DetalleInvEnt_InventarioEntrante foreign key (intInventarioEntID)
 references InventarioEntrante (intInventarioEntID)
+
+create table CAT_Eventos
+(
+	intEventoID int IDENTITY,
+	vchEvento varchar(30) null
+	constraint PK_CAT_Eventos primary key (intEventoID)
+)
+
+create table Bitacora_Productos
+(
+	intBitacoraID int IDENTITY,
+	intProductoID int null,
+	datFechaBitacora datetime null,
+	intTipoPrendaID int null,
+	intTallaID int null,
+	intColorID int null,
+	vchSKUProducto varchar(10) null,
+	vchNombreProducto varchar(100) null,
+	decCostoProducto decimal(6,2) null,
+	intStockProducto int null,
+	vchDescripcionProducto varchar(100) null,
+	vchImagenProducto varchar(250) null,
+	bitEstadoProducto bit null,
+	datFechaAltaProducto datetime null,
+	intUsuarioAltaProducto int null,
+	intEventoId int null
+	constraint PK_Bitacora_ModificacionProductos primary key(intBitacoraID)
+)
+
+alter table Bitacora_Productos
+add constraint FK_Bitacora_Productos_CAT_Productos foreign key (intProductoID)
+references CAT_Productos (intProductoID)
+
+alter table Bitacora_Productos
+add constraint FK_Bitacora_Productos_CAT_Eventos foreign key (intEventoID)
+references CAT_Eventos (intEventoID);
+

@@ -36,14 +36,18 @@ values ('Administrador','El rol de admin no tiene restriccion',1),
 
 go
 
-insert into CAT_Usuarios(intRolID, vchNombreUsuario, vchApellidoUsuario, vchDireccionUsuario, vchTelefonoUsuario, vchUserUsuario, vchContrasenaUsuario, bitEstadoUsuario)
+insert into CAT_Usuarios(intRolID, vchNombreUsuario, vchApellidoUsuario, vchDireccionUsuario, vchTelefonoUsuario, vchUserUsuario, vchContraseñaUsuario, bitEstadoUsuario)
 values (1,'Aministrador','Kingmonster','Vertiz 86','564896535','admin','Vertiz86',1),
 		(2,'Josue','Cuevas','Villa de Cortez #27','5618667848','vader','Vader123',1)
 
 go
 
-insert into CAT_Productos(intTipoPrendaID, intTallaID, intColorID, vchSKUProducto, vchNombreProducto, decCostoProducto, intStockProducto, vchDescripcionProducto, vchImagenProducto, bitEstadoProducto, datFechaAltaProducto)
-values (2,3,4,'SKU002','Prenda2',90,20,'Descripcion prenda 2','imagenPrenda2',1,'20220508')
+insert into CAT_Productos(intTipoPrendaID, intTallaID, intColorID, vchSKUProducto, vchNombreProducto, decCostoProducto, intStockProducto, vchDescripcionProducto, vchImagenProducto, bitEstadoProducto, datFechaAltaProducto, intUsuarioAltaProducto)
+values (2,3,4,'SKU002','Prenda2',90,20,'Descripcion prenda 2','imagenPrenda2',1,'20220508',2)
+
+go
+
+insert into CAT_Eventos (vchEvento) values('Insert'),('Update'),('Delete')
 
 go
 
