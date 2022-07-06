@@ -18,6 +18,7 @@ namespace Control_Inventario_KM.App_Data
         public CAT_Usuarios()
         {
             this.InventarioEntrante = new HashSet<InventarioEntrante>();
+            this.CAT_Productos = new HashSet<CAT_Productos>();
         }
     
         public int intUsuarioID { get; set; }
@@ -33,5 +34,7 @@ namespace Control_Inventario_KM.App_Data
         public virtual CAT_RolUsuario CAT_RolUsuario { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InventarioEntrante> InventarioEntrante { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CAT_Productos> CAT_Productos { get; set; }
     }
 }

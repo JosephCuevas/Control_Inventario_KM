@@ -24,6 +24,7 @@
     <EntitySetMapping Name="CAT_Productos">
       <EntityTypeMapping TypeName="Control_Inventario_KMModel.CAT_Productos">
         <MappingFragment StoreEntitySet="CAT_Productos">
+          <ScalarProperty Name="intUsuarioAltaProducto" ColumnName="intUsuarioAltaProducto" />
           <ScalarProperty Name="intProductoID" ColumnName="intProductoID" />
           <ScalarProperty Name="intTipoPrendaID" ColumnName="intTipoPrendaID" />
           <ScalarProperty Name="intTallaID" ColumnName="intTallaID" />

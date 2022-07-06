@@ -15,7 +15,7 @@
     <Property Name="intPersonaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="intTipoPersonaID" Type="Int32" />
     <Property Name="vchNombrePersona" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="vchDireccionPersona" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="vchDireccionPersona" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
     <Property Name="vchTelefonoPersona" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
     <Property Name="vhcEmailPersona" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="InventarioEntrante" Relationship="Self.FK_InventarioEntrante_CAT_Personas" FromRole="CAT_Personas" ToRole="InventarioEntrante" />
@@ -31,7 +31,7 @@
     <Property Name="intTallaID" Type="Int32" />
     <Property Name="intColorID" Type="Int32" />
     <Property Name="vchSKUProducto" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-    <Property Name="vchNombreProducto" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="vchNombreProducto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="decCostoProducto" Type="Decimal" Precision="6" Scale="2" />
     <Property Name="intStockProducto" Type="Int32" />
     <Property Name="vchDescripcionProducto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
@@ -42,6 +42,8 @@
     <NavigationProperty Name="DetalleInvSal" Relationship="Self.FK_DetalleInvSal_CAT_Productos" FromRole="CAT_Productos" ToRole="DetalleInvSal" />
     <NavigationProperty Name="CAT_Tallas" Relationship="Self.FK_Productos_CAT_Tallas" FromRole="CAT_Productos" ToRole="CAT_Tallas" />
     <NavigationProperty Name="CAT_TipoPrendas" Relationship="Self.FK_Productos_CAT_TipoPrendas" FromRole="CAT_Productos" ToRole="CAT_TipoPrendas" />
+    <Property Name="intUsuarioAltaProducto" Type="Int32" />
+    <NavigationProperty Name="CAT_Usuarios" Relationship="Control_Inventario_KMModel.FK_Productos_CAT_Usuarios" FromRole="CAT_Productos" ToRole="CAT_Usuarios" />
   </EntityType>
   <EntityType Name="CAT_RolUsuario">
     <Key>
@@ -58,7 +60,7 @@
       <PropertyRef Name="intTallaID" />
     </Key>
     <Property Name="intTallaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="vchNombreTalla" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="vchNombreTalla" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="CAT_Productos" Relationship="Self.FK_Productos_CAT_Tallas" FromRole="CAT_Tallas" ToRole="CAT_Productos" />
   </EntityType>
   <EntityType Name="CAT_TipoPersona">
@@ -85,13 +87,14 @@
     <Property Name="intRolID" Type="Int32" />
     <Property Name="vchNombreUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="vchApellidoUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="vchDireccionUsuario" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="vchDireccionUsuario" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
     <Property Name="vchTelefonoUsuario" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
     <Property Name="vchUserUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="vchContraseñaUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="bitEstadoUsuario" Type="Boolean" />
     <NavigationProperty Name="CAT_RolUsuario" Relationship="Self.FK_Usuarios_CAT_RolUsuario" FromRole="CAT_Usuarios" ToRole="CAT_RolUsuario" />
     <NavigationProperty Name="InventarioEntrante" Relationship="Self.FK_InventarioEntrante_CAT_Usuarios" FromRole="CAT_Usuarios" ToRole="InventarioEntrante" />
+    <NavigationProperty Name="CAT_Productos" Relationship="Control_Inventario_KMModel.FK_Productos_CAT_Usuarios" FromRole="CAT_Usuarios" ToRole="CAT_Productos" />
   </EntityType>
   <EntityType Name="DetalleInvEnt">
     <Key>
@@ -333,5 +336,21 @@
       <End Role="InventarioSaliente" EntitySet="InventarioSaliente" />
       <End Role="DetalleInvSal" EntitySet="DetalleInvSal" />
     </AssociationSet>
+    <AssociationSet Name="FK_Productos_CAT_Usuarios" Association="Control_Inventario_KMModel.FK_Productos_CAT_Usuarios">
+      <End Role="CAT_Usuarios" EntitySet="CAT_Usuarios" />
+      <End Role="CAT_Productos" EntitySet="CAT_Productos" />
+    </AssociationSet>
   </EntityContainer>
+  <Association Name="FK_Productos_CAT_Usuarios">
+    <End Type="Control_Inventario_KMModel.CAT_Usuarios" Role="CAT_Usuarios" Multiplicity="0..1" />
+    <End Type="Control_Inventario_KMModel.CAT_Productos" Role="CAT_Productos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CAT_Usuarios">
+        <PropertyRef Name="intUsuarioID" />
+      </Principal>
+      <Dependent Role="CAT_Productos">
+        <PropertyRef Name="intUsuarioAltaProducto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

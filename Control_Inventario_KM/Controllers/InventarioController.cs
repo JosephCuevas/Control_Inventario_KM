@@ -108,10 +108,12 @@ namespace Control_Inventario_KM.Controllers
             //        "intStock": "1",
             //        "vchDescripcion": "Descripcion",
             //        "vchImagen": "Link imagen",
-            //    }
+            //    },
+            //      "usuarioAlta": 1
             //}
 
             CAT_Productos producto = data["producto"].ToObject<CAT_Productos>();
+            int usuarioAlta = data["usuarioAlta"].ToObject<int>();
             using (var conexion = new Control_Inventario_KMEntities())
             {
                 if (conexion.CAT_Productos.Any(p => p.vchNombreProducto == producto.vchNombreProducto))
@@ -134,6 +136,7 @@ namespace Control_Inventario_KM.Controllers
                     producto.vchImagenProducto = producto.vchImagenProducto;
                     producto.bitEstadoProducto = true;
                     producto.datFechaAltaProducto = DateTime.Now;
+                    producto.intUsuarioAltaProducto = usuarioAlta;
                     conexion.CAT_Productos.Add(producto);
                     conexion.SaveChanges();
                     return new
@@ -166,10 +169,12 @@ namespace Control_Inventario_KM.Controllers
             //        "vchDescripcion": "Descripcion",
             //        "vchImagen": "Link imagen",
             //        "bitEstado": 1
-            //    }
+            //    },
+            //      "usuarioAlta": 1
             //}
 
             CAT_Productos producto = data["producto"].ToObject<CAT_Productos>();
+            int usuarioAlta = data["usuarioAlta"].ToObject<int>();
             using (var conexion = new Control_Inventario_KMEntities())
             {
                 if (conexion.CAT_Productos.Any(p => p.intProductoID == producto.intProductoID))
@@ -196,6 +201,7 @@ namespace Control_Inventario_KM.Controllers
                         productoBase.intStockProducto = producto.intStockProducto;
                         productoBase.vchDescripcionProducto = producto.vchDescripcionProducto;
                         productoBase.vchImagenProducto = producto.vchImagenProducto;
+                        productoBase.intUsuarioAltaProducto = usuarioAlta;
                         productoBase.datFechaAltaProducto = DateTime.Now;
                         conexion.SaveChanges();
                         return new
@@ -224,16 +230,19 @@ namespace Control_Inventario_KM.Controllers
         public object actualizaEstadoProducto([FromBody] JObject data)
         {
             ////{
-            ////    "productoID":""
+            ////    "productoID":1,
+            ////     "usuarioAlta":1
             ////}
 
             int intProductoID = data["productoID"].ToObject<int>();
+            int usuarioAlta = data["usuarioAlta"].ToObject<int>();
             using (var conexion = new Control_Inventario_KMEntities())
             {
                 if (conexion.CAT_Productos.Any(p => p.intProductoID == intProductoID))
                 {
                     var productoBase = conexion.CAT_Productos.FirstOrDefault(p => p.intProductoID == intProductoID);
                     productoBase.datFechaAltaProducto = DateTime.Now;
+                    productoBase.intUsuarioAltaProducto = usuarioAlta;
                     productoBase.bitEstadoProducto = !productoBase.bitEstadoProducto;
                     conexion.SaveChanges();
                     return new
@@ -264,15 +273,18 @@ namespace Control_Inventario_KM.Controllers
             //  "producto":{
             //    "intProductoID":1,
             //    "intStockProducto":2
-            //   }
+            //   },
+            //      "usuarioAlta": 1
             //}
             CAT_Productos producto = data["producto"].ToObject<CAT_Productos>();
-            using(var conexion = new Control_Inventario_KMEntities())
+            int usuarioAlta = data["usuarioAlta"].ToObject<int>();
+            using (var conexion = new Control_Inventario_KMEntities())
             {
                 if (conexion.CAT_Productos.Any(p => p.intProductoID == producto.intProductoID))
                 {
                     var productoBase = conexion.CAT_Productos.FirstOrDefault(p => p.intProductoID == producto.intProductoID);
                     productoBase.intStockProducto = producto.intStockProducto;
+                    productoBase.intUsuarioAltaProducto = usuarioAlta;
                     conexion.SaveChanges();
                     return new
                     {

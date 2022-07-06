@@ -316,27 +316,34 @@ else {
     }
 
     function cambioEstado(check, id) {
-        const APICambioEstado = 'https://localhost:44363/api/inventario/actualizaEstadoProducto';
 
-        var idP = {
-            "productoID": id
-        }
-
-        fetch(APICambioEstado, {
-            method: 'POST',
-            body: JSON.stringify(idP),
-            headers: {
-                'Content-Type': 'application/json'
+        
+        if (usuarioLogID > 0) {
+            const APICambioEstado = 'https://localhost:44363/api/inventario/actualizaEstadoProducto';
+            var idP = {
+                "productoID": id,
+                "usuarioAlta": usuarioLogID
             }
-        }).then(res => res.json())
-            .catch(error => console.error('Error:', error))
-            .then(response => {
-                if (response.valido) {
-                    alert("Cambio de producto correcto");
-                } else {
-                    alert("Error, no se realizo el cambio de estado")
+
+            fetch(APICambioEstado, {
+                method: 'POST',
+                body: JSON.stringify(idP),
+                headers: {
+                    'Content-Type': 'application/json'
                 }
-            });
+            }).then(res => res.json())
+                .catch(error => console.error('Error:', error))
+                .then(response => {
+                    if (response.valido) {
+                        alert("Cambio de producto correcto");
+                    } else {
+                        alert("Error, no se realizo el cambio de estado")
+                    }
+                });
+        }
+        else {
+            window.location.replace("./login.html");
+        }
     }
 
 
@@ -370,7 +377,8 @@ else {
                     "intStockProducto": inventarioProducto,
                     "vchDescripcionProducto": descripcionProducto,
                     "vchImagenProducto": imagenProducto
-                }
+                },
+                "usuarioAlta": usuarioLogID
             };
             fetch(APIEditar, {
                 method: 'POST',
@@ -403,7 +411,8 @@ else {
                     "intStockProducto": inventarioProducto,
                     "vchDescripcionProducto": descripcionProducto,
                     "vchImagenProducto": imagenProducto
-                }
+                },
+                "usuarioAlta": usuarioLogID
             };
             fetch(APIAgregar, {
                 method: 'POST',
@@ -500,7 +509,8 @@ else {
                 "producto": {
                     "intProductoID": productoSeleccionado,
                     "intStockProducto": nuevoInventario
-                }
+                },
+                "usuarioAlta": usuarioLogID
             };
             fetch(APIEditInv, {
                 method: 'POST',

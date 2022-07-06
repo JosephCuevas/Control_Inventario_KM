@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Control_Inventario_KMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Control_Inventario_KMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CAT_Colores">
           <Key>
             <PropertyRef Name="intColorID" />
@@ -19,7 +19,7 @@
           <Property Name="intPersonaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="intTipoPersonaID" Type="int" />
           <Property Name="vchNombrePersona" Type="varchar" MaxLength="50" />
-          <Property Name="vchDireccionPersona" Type="varchar" MaxLength="100" />
+          <Property Name="vchDireccionPersona" Type="varchar" MaxLength="250" />
           <Property Name="vchTelefonoPersona" Type="varchar" MaxLength="15" />
           <Property Name="vhcEmailPersona" Type="varchar" MaxLength="50" />
         </EntityType>
@@ -32,13 +32,14 @@
           <Property Name="intTallaID" Type="int" />
           <Property Name="intColorID" Type="int" />
           <Property Name="vchSKUProducto" Type="varchar" MaxLength="10" />
-          <Property Name="vchNombreProducto" Type="varchar" MaxLength="10" />
+          <Property Name="vchNombreProducto" Type="varchar" MaxLength="100" />
           <Property Name="decCostoProducto" Type="decimal" Precision="6" Scale="2" />
           <Property Name="intStockProducto" Type="int" />
           <Property Name="vchDescripcionProducto" Type="varchar" MaxLength="100" />
           <Property Name="vchImagenProducto" Type="varchar" MaxLength="250" />
           <Property Name="bitEstadoProducto" Type="bit" />
           <Property Name="datFechaAltaProducto" Type="datetime" />
+          <Property Name="intUsuarioAltaProducto" Type="int" />
         </EntityType>
         <EntityType Name="CAT_RolUsuario">
           <Key>
@@ -54,7 +55,7 @@
             <PropertyRef Name="intTallaID" />
           </Key>
           <Property Name="intTallaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="vchNombreTalla" Type="varchar" MaxLength="50" />
+          <Property Name="vchNombreTalla" Type="varchar" MaxLength="70" />
         </EntityType>
         <EntityType Name="CAT_TipoPersona">
           <Key>
@@ -78,7 +79,7 @@
           <Property Name="intRolID" Type="int" />
           <Property Name="vchNombreUsuario" Type="varchar" MaxLength="50" />
           <Property Name="vchApellidoUsuario" Type="varchar" MaxLength="50" />
-          <Property Name="vchDireccionUsuario" Type="varchar" MaxLength="100" />
+          <Property Name="vchDireccionUsuario" Type="varchar" MaxLength="250" />
           <Property Name="vchTelefonoUsuario" Type="varchar" MaxLength="15" />
           <Property Name="vchUserUsuario" Type="varchar" MaxLength="50" />
           <Property Name="vchContraseñaUsuario" Type="varchar" MaxLength="50" />
@@ -127,6 +128,18 @@
           <Property Name="decTotalInvSal" Type="decimal" Precision="15" Scale="2" />
           <Property Name="vchEstadoInvSal" Type="varchar" MaxLength="50" />
         </EntityType>
+        <Association Name="FK_CAT_Usuarios_CAT_RolUsuario">
+          <End Role="CAT_RolUsuario" Type="Self.CAT_RolUsuario" Multiplicity="0..1" />
+          <End Role="CAT_Usuarios" Type="Self.CAT_Usuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAT_RolUsuario">
+              <PropertyRef Name="intRolID" />
+            </Principal>
+            <Dependent Role="CAT_Usuarios">
+              <PropertyRef Name="intRolID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_DetalleInvEnt_InventarioEntrante">
           <End Role="InventarioEntrante" Type="Self.InventarioEntrante" Multiplicity="0..1" />
           <End Role="DetalleInvEnt" Type="Self.DetalleInvEnt" Multiplicity="*" />
@@ -247,15 +260,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Usuarios_CAT_RolUsuario">
-          <End Role="CAT_RolUsuario" Type="Self.CAT_RolUsuario" Multiplicity="0..1" />
-          <End Role="CAT_Usuarios" Type="Self.CAT_Usuarios" Multiplicity="*" />
+        <Association Name="FK_Productos_CAT_Usuarios">
+          <End Role="CAT_Usuarios" Type="Self.CAT_Usuarios" Multiplicity="0..1" />
+          <End Role="CAT_Productos" Type="Self.CAT_Productos" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="CAT_RolUsuario">
-              <PropertyRef Name="intRolID" />
+            <Principal Role="CAT_Usuarios">
+              <PropertyRef Name="intUsuarioID" />
             </Principal>
-            <Dependent Role="CAT_Usuarios">
-              <PropertyRef Name="intRolID" />
+            <Dependent Role="CAT_Productos">
+              <PropertyRef Name="intUsuarioAltaProducto" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -272,6 +285,10 @@
           <EntitySet Name="DetalleInvSal" EntityType="Self.DetalleInvSal" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InventarioEntrante" EntityType="Self.InventarioEntrante" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InventarioSaliente" EntityType="Self.InventarioSaliente" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CAT_Usuarios_CAT_RolUsuario" Association="Self.FK_CAT_Usuarios_CAT_RolUsuario">
+            <End Role="CAT_RolUsuario" EntitySet="CAT_RolUsuario" />
+            <End Role="CAT_Usuarios" EntitySet="CAT_Usuarios" />
+          </AssociationSet>
           <AssociationSet Name="FK_DetalleInvEnt_InventarioEntrante" Association="Self.FK_DetalleInvEnt_InventarioEntrante">
             <End Role="InventarioEntrante" EntitySet="InventarioEntrante" />
             <End Role="DetalleInvEnt" EntitySet="DetalleInvEnt" />
@@ -312,13 +329,12 @@
             <End Role="CAT_TipoPrendas" EntitySet="CAT_TipoPrendas" />
             <End Role="CAT_Productos" EntitySet="CAT_Productos" />
           </AssociationSet>
-          <AssociationSet Name="FK_Usuarios_CAT_RolUsuario" Association="Self.FK_Usuarios_CAT_RolUsuario">
-            <End Role="CAT_RolUsuario" EntitySet="CAT_RolUsuario" />
+          <AssociationSet Name="FK_Productos_CAT_Usuarios" Association="Self.FK_Productos_CAT_Usuarios">
             <End Role="CAT_Usuarios" EntitySet="CAT_Usuarios" />
+            <End Role="CAT_Productos" EntitySet="CAT_Productos" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Control_Inventario_KMModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -337,7 +353,7 @@
           <Property Name="intPersonaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="intTipoPersonaID" Type="Int32" />
           <Property Name="vchNombrePersona" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="vchDireccionPersona" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="vchDireccionPersona" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="vchTelefonoPersona" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="vhcEmailPersona" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="InventarioEntrante" Relationship="Self.FK_InventarioEntrante_CAT_Personas" FromRole="CAT_Personas" ToRole="InventarioEntrante" />
@@ -353,7 +369,7 @@
           <Property Name="intTallaID" Type="Int32" />
           <Property Name="intColorID" Type="Int32" />
           <Property Name="vchSKUProducto" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="vchNombreProducto" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="vchNombreProducto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="decCostoProducto" Type="Decimal" Precision="6" Scale="2" />
           <Property Name="intStockProducto" Type="Int32" />
           <Property Name="vchDescripcionProducto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
@@ -364,6 +380,8 @@
           <NavigationProperty Name="DetalleInvSal" Relationship="Self.FK_DetalleInvSal_CAT_Productos" FromRole="CAT_Productos" ToRole="DetalleInvSal" />
           <NavigationProperty Name="CAT_Tallas" Relationship="Self.FK_Productos_CAT_Tallas" FromRole="CAT_Productos" ToRole="CAT_Tallas" />
           <NavigationProperty Name="CAT_TipoPrendas" Relationship="Self.FK_Productos_CAT_TipoPrendas" FromRole="CAT_Productos" ToRole="CAT_TipoPrendas" />
+          <Property Name="intUsuarioAltaProducto" Type="Int32" />
+          <NavigationProperty Name="CAT_Usuarios" Relationship="Control_Inventario_KMModel.FK_Productos_CAT_Usuarios" FromRole="CAT_Productos" ToRole="CAT_Usuarios" />
         </EntityType>
         <EntityType Name="CAT_RolUsuario">
           <Key>
@@ -380,7 +398,7 @@
             <PropertyRef Name="intTallaID" />
           </Key>
           <Property Name="intTallaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="vchNombreTalla" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="vchNombreTalla" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="CAT_Productos" Relationship="Self.FK_Productos_CAT_Tallas" FromRole="CAT_Tallas" ToRole="CAT_Productos" />
         </EntityType>
         <EntityType Name="CAT_TipoPersona">
@@ -407,13 +425,14 @@
           <Property Name="intRolID" Type="Int32" />
           <Property Name="vchNombreUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="vchApellidoUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="vchDireccionUsuario" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="vchDireccionUsuario" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="vchTelefonoUsuario" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="vchUserUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="vchContraseñaUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="bitEstadoUsuario" Type="Boolean" />
           <NavigationProperty Name="CAT_RolUsuario" Relationship="Self.FK_Usuarios_CAT_RolUsuario" FromRole="CAT_Usuarios" ToRole="CAT_RolUsuario" />
           <NavigationProperty Name="InventarioEntrante" Relationship="Self.FK_InventarioEntrante_CAT_Usuarios" FromRole="CAT_Usuarios" ToRole="InventarioEntrante" />
+          <NavigationProperty Name="CAT_Productos" Relationship="Control_Inventario_KMModel.FK_Productos_CAT_Usuarios" FromRole="CAT_Usuarios" ToRole="CAT_Productos" />
         </EntityType>
         <EntityType Name="DetalleInvEnt">
           <Key>
@@ -655,7 +674,23 @@
             <End Role="InventarioSaliente" EntitySet="InventarioSaliente" />
             <End Role="DetalleInvSal" EntitySet="DetalleInvSal" />
           </AssociationSet>
+          <AssociationSet Name="FK_Productos_CAT_Usuarios" Association="Control_Inventario_KMModel.FK_Productos_CAT_Usuarios">
+            <End Role="CAT_Usuarios" EntitySet="CAT_Usuarios" />
+            <End Role="CAT_Productos" EntitySet="CAT_Productos" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_Productos_CAT_Usuarios">
+          <End Type="Control_Inventario_KMModel.CAT_Usuarios" Role="CAT_Usuarios" Multiplicity="0..1" />
+          <End Type="Control_Inventario_KMModel.CAT_Productos" Role="CAT_Productos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAT_Usuarios">
+              <PropertyRef Name="intUsuarioID" />
+            </Principal>
+            <Dependent Role="CAT_Productos">
+              <PropertyRef Name="intUsuarioAltaProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -685,6 +720,7 @@
           <EntitySetMapping Name="CAT_Productos">
             <EntityTypeMapping TypeName="Control_Inventario_KMModel.CAT_Productos">
               <MappingFragment StoreEntitySet="CAT_Productos">
+                <ScalarProperty Name="intUsuarioAltaProducto" ColumnName="intUsuarioAltaProducto" />
                 <ScalarProperty Name="intProductoID" ColumnName="intProductoID" />
                 <ScalarProperty Name="intTipoPrendaID" ColumnName="intTipoPrendaID" />
                 <ScalarProperty Name="intTallaID" ColumnName="intTallaID" />

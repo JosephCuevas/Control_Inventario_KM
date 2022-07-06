@@ -14,7 +14,7 @@
     <Property Name="intPersonaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="intTipoPersonaID" Type="int" />
     <Property Name="vchNombrePersona" Type="varchar" MaxLength="50" />
-    <Property Name="vchDireccionPersona" Type="varchar" MaxLength="100" />
+    <Property Name="vchDireccionPersona" Type="varchar" MaxLength="250" />
     <Property Name="vchTelefonoPersona" Type="varchar" MaxLength="15" />
     <Property Name="vhcEmailPersona" Type="varchar" MaxLength="50" />
   </EntityType>
@@ -27,13 +27,14 @@
     <Property Name="intTallaID" Type="int" />
     <Property Name="intColorID" Type="int" />
     <Property Name="vchSKUProducto" Type="varchar" MaxLength="10" />
-    <Property Name="vchNombreProducto" Type="varchar" MaxLength="10" />
+    <Property Name="vchNombreProducto" Type="varchar" MaxLength="100" />
     <Property Name="decCostoProducto" Type="decimal" Precision="6" Scale="2" />
     <Property Name="intStockProducto" Type="int" />
     <Property Name="vchDescripcionProducto" Type="varchar" MaxLength="100" />
     <Property Name="vchImagenProducto" Type="varchar" MaxLength="250" />
     <Property Name="bitEstadoProducto" Type="bit" />
     <Property Name="datFechaAltaProducto" Type="datetime" />
+    <Property Name="intUsuarioAltaProducto" Type="int" />
   </EntityType>
   <EntityType Name="CAT_RolUsuario">
     <Key>
@@ -49,7 +50,7 @@
       <PropertyRef Name="intTallaID" />
     </Key>
     <Property Name="intTallaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="vchNombreTalla" Type="varchar" MaxLength="50" />
+    <Property Name="vchNombreTalla" Type="varchar" MaxLength="70" />
   </EntityType>
   <EntityType Name="CAT_TipoPersona">
     <Key>
@@ -73,7 +74,7 @@
     <Property Name="intRolID" Type="int" />
     <Property Name="vchNombreUsuario" Type="varchar" MaxLength="50" />
     <Property Name="vchApellidoUsuario" Type="varchar" MaxLength="50" />
-    <Property Name="vchDireccionUsuario" Type="varchar" MaxLength="100" />
+    <Property Name="vchDireccionUsuario" Type="varchar" MaxLength="250" />
     <Property Name="vchTelefonoUsuario" Type="varchar" MaxLength="15" />
     <Property Name="vchUserUsuario" Type="varchar" MaxLength="50" />
     <Property Name="vchContraseñaUsuario" Type="varchar" MaxLength="50" />
@@ -122,6 +123,18 @@
     <Property Name="decTotalInvSal" Type="decimal" Precision="15" Scale="2" />
     <Property Name="vchEstadoInvSal" Type="varchar" MaxLength="50" />
   </EntityType>
+  <Association Name="FK_CAT_Usuarios_CAT_RolUsuario">
+    <End Role="CAT_RolUsuario" Type="Self.CAT_RolUsuario" Multiplicity="0..1" />
+    <End Role="CAT_Usuarios" Type="Self.CAT_Usuarios" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CAT_RolUsuario">
+        <PropertyRef Name="intRolID" />
+      </Principal>
+      <Dependent Role="CAT_Usuarios">
+        <PropertyRef Name="intRolID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_DetalleInvEnt_InventarioEntrante">
     <End Role="InventarioEntrante" Type="Self.InventarioEntrante" Multiplicity="0..1" />
     <End Role="DetalleInvEnt" Type="Self.DetalleInvEnt" Multiplicity="*" />
@@ -242,15 +255,15 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Usuarios_CAT_RolUsuario">
-    <End Role="CAT_RolUsuario" Type="Self.CAT_RolUsuario" Multiplicity="0..1" />
-    <End Role="CAT_Usuarios" Type="Self.CAT_Usuarios" Multiplicity="*" />
+  <Association Name="FK_Productos_CAT_Usuarios">
+    <End Role="CAT_Usuarios" Type="Self.CAT_Usuarios" Multiplicity="0..1" />
+    <End Role="CAT_Productos" Type="Self.CAT_Productos" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="CAT_RolUsuario">
-        <PropertyRef Name="intRolID" />
+      <Principal Role="CAT_Usuarios">
+        <PropertyRef Name="intUsuarioID" />
       </Principal>
-      <Dependent Role="CAT_Usuarios">
-        <PropertyRef Name="intRolID" />
+      <Dependent Role="CAT_Productos">
+        <PropertyRef Name="intUsuarioAltaProducto" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -267,6 +280,10 @@
     <EntitySet Name="DetalleInvSal" EntityType="Self.DetalleInvSal" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="InventarioEntrante" EntityType="Self.InventarioEntrante" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="InventarioSaliente" EntityType="Self.InventarioSaliente" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_CAT_Usuarios_CAT_RolUsuario" Association="Self.FK_CAT_Usuarios_CAT_RolUsuario">
+      <End Role="CAT_RolUsuario" EntitySet="CAT_RolUsuario" />
+      <End Role="CAT_Usuarios" EntitySet="CAT_Usuarios" />
+    </AssociationSet>
     <AssociationSet Name="FK_DetalleInvEnt_InventarioEntrante" Association="Self.FK_DetalleInvEnt_InventarioEntrante">
       <End Role="InventarioEntrante" EntitySet="InventarioEntrante" />
       <End Role="DetalleInvEnt" EntitySet="DetalleInvEnt" />
@@ -307,9 +324,9 @@
       <End Role="CAT_TipoPrendas" EntitySet="CAT_TipoPrendas" />
       <End Role="CAT_Productos" EntitySet="CAT_Productos" />
     </AssociationSet>
-    <AssociationSet Name="FK_Usuarios_CAT_RolUsuario" Association="Self.FK_Usuarios_CAT_RolUsuario">
-      <End Role="CAT_RolUsuario" EntitySet="CAT_RolUsuario" />
+    <AssociationSet Name="FK_Productos_CAT_Usuarios" Association="Self.FK_Productos_CAT_Usuarios">
       <End Role="CAT_Usuarios" EntitySet="CAT_Usuarios" />
+      <End Role="CAT_Productos" EntitySet="CAT_Productos" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

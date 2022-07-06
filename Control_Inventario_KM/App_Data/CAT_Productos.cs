@@ -32,11 +32,13 @@ namespace Control_Inventario_KM.App_Data
         public string vchImagenProducto { get; set; }
         public Nullable<bool> bitEstadoProducto { get; set; }
         public Nullable<System.DateTime> datFechaAltaProducto { get; set; }
+        public Nullable<int> intUsuarioAltaProducto { get; set; }
     
         public virtual CAT_Colores CAT_Colores { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DetalleInvSal> DetalleInvSal { get; set; }
         public virtual CAT_Tallas CAT_Tallas { get; set; }
         public virtual CAT_TipoPrendas CAT_TipoPrendas { get; set; }
+        public virtual CAT_Usuarios CAT_Usuarios { get; set; }
     }
 }

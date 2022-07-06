@@ -28,6 +28,7 @@
         <AssociationConnector Association="Control_Inventario_KMModel.FK_InventarioEntrante_CAT_Usuarios" ManuallyRouted="false" />
         <AssociationConnector Association="Control_Inventario_KMModel.FK_DetalleInvEnt_InventarioEntrante" ManuallyRouted="false" />
         <AssociationConnector Association="Control_Inventario_KMModel.FK_DetalleInvSal_InventarioSaliente" ManuallyRouted="false" />
+        <AssociationConnector Association="Control_Inventario_KMModel.FK_Productos_CAT_Usuarios" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
