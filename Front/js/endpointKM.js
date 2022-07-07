@@ -3,7 +3,9 @@ const usuarioLog = localStorage.getItem("usuario");
 const usuarioLogID = localStorage.getItem("usuarioid");
 const usuarioLogNombre = localStorage.getItem("usuarionombre");
 
-if (usuarioLogID === 0 && usuarioLogID === null) {
+
+if (usuarioLogID === 0 || usuarioLogID === null) {
+    console.log('comprobado');
     alert("Favor de iniciar sesion");
     window.location.replace("./login.html");
 }
@@ -346,7 +348,7 @@ else {
         }
     }
 
-
+    // Función para envíar los datos a la BD, depende si es actualización o nuevo ingreso
     function enviarDatosBD() {
         const APIAgregar = 'https://localhost:44363/api/inventario/agregarProducto';
         const APIEditar = 'https://localhost:44363/api/inventario/actualizaProducto';
@@ -435,6 +437,7 @@ else {
         }
     }
 
+    // Función para limpiar el contenido del formulario de ingreso y edición de productos
     function limpiarFormulario() {
         productoSeleccionado = 0;
 
