@@ -105,6 +105,8 @@ create table CAT_TipoPersona
 	constraint PK_CAT_TipoPersona primary key (intTipoPersonaID)
 )
 
+go
+
 create table CAT_Personas
 (
 	intPersonaID int IDENTITY,
@@ -119,6 +121,8 @@ create table CAT_Personas
 alter table CAT_Personas
 add constraint FK_Personas_CAT_TipoPersona foreign key (intTipoPersonaID)
 references CAT_TipoPersona (intTipoPersonaID)
+
+go
 
 create table InventarioSaliente
 (
@@ -193,12 +197,20 @@ alter table DetalleInvEnt
 add constraint FK_DetalleInvEnt_InventarioEntrante foreign key (intInventarioEntID)
 references InventarioEntrante (intInventarioEntID)
 
+alter table DetalleInvEnt
+add constraint FK_DetalleInvEnt_CAT_Productos foreign key (intProductoID)
+references CAT_Productos (intProductoID)
+
+go
+
 create table CAT_Eventos
 (
 	intEventoID int IDENTITY,
 	vchEvento varchar(30) null
 	constraint PK_CAT_Eventos primary key (intEventoID)
 )
+
+go
 
 create table Bitacora_Productos
 (
