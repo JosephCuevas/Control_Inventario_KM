@@ -161,6 +161,15 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Data\Bitacora_Productos.cs">
+      <DependentUpon>Control_Inventario_KMEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="App_Data\CAT_Eventos.cs">
+      <DependentUpon>Control_Inventario_KMEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="App_Data\sysdiagrams.cs">
+      <DependentUpon>Control_Inventario_KMEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="App_Data\CAT_Colores.cs">
       <DependentUpon>Control_Inventario_KMEF.tt</DependentUpon>
