@@ -21,5 +21,6 @@ namespace Control_Inventario_KM.App_Data
         public Nullable<decimal> decCostoParcial { get; set; }
     
         public virtual InventarioEntrante InventarioEntrante { get; set; }
+        public virtual CAT_Productos CAT_Productos { get; set; }
     }
 }

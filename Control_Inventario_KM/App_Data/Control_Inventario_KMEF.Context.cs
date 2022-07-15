@@ -37,5 +37,8 @@ namespace Control_Inventario_KM.App_Data
         public virtual DbSet<DetalleInvSal> DetalleInvSal { get; set; }
         public virtual DbSet<InventarioEntrante> InventarioEntrante { get; set; }
         public virtual DbSet<InventarioSaliente> InventarioSaliente { get; set; }
+        public virtual DbSet<Bitacora_Productos> Bitacora_Productos { get; set; }
+        public virtual DbSet<CAT_Eventos> CAT_Eventos { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
     }
 }

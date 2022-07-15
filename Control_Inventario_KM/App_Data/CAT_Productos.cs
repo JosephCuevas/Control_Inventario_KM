@@ -18,6 +18,8 @@ namespace Control_Inventario_KM.App_Data
         public CAT_Productos()
         {
             this.DetalleInvSal = new HashSet<DetalleInvSal>();
+            this.DetalleInvEnt = new HashSet<DetalleInvEnt>();
+            this.Bitacora_Productos = new HashSet<Bitacora_Productos>();
         }
     
         public int intProductoID { get; set; }
@@ -40,5 +42,9 @@ namespace Control_Inventario_KM.App_Data
         public virtual CAT_Tallas CAT_Tallas { get; set; }
         public virtual CAT_TipoPrendas CAT_TipoPrendas { get; set; }
         public virtual CAT_Usuarios CAT_Usuarios { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DetalleInvEnt> DetalleInvEnt { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Bitacora_Productos> Bitacora_Productos { get; set; }
     }
 }
