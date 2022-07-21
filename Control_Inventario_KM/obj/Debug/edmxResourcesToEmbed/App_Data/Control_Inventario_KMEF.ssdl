@@ -1,11 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="Control_Inventario_KMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Bitacora_Productos">
+    <Key>
+      <PropertyRef Name="intBitacoraID" />
+    </Key>
+    <Property Name="intBitacoraID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="intProductoID" Type="int" />
+    <Property Name="datFechaBitacora" Type="datetime" />
+    <Property Name="intTipoPrendaID" Type="int" />
+    <Property Name="intTallaID" Type="int" />
+    <Property Name="intColorID" Type="int" />
+    <Property Name="vchSKUProducto" Type="varchar" MaxLength="10" />
+    <Property Name="vchNombreProducto" Type="varchar" MaxLength="100" />
+    <Property Name="decCostoProducto" Type="decimal" Precision="6" Scale="2" />
+    <Property Name="intStockProducto" Type="int" />
+    <Property Name="vchDescripcionProducto" Type="varchar" MaxLength="100" />
+    <Property Name="vchImagenProducto" Type="varchar" MaxLength="250" />
+    <Property Name="bitEstadoProducto" Type="bit" />
+    <Property Name="datFechaAltaProducto" Type="datetime" />
+    <Property Name="intEventoID" Type="int" />
+    <Property Name="intUsuarioAltaProducto" Type="int" />
+  </EntityType>
   <EntityType Name="CAT_Colores">
     <Key>
       <PropertyRef Name="intColorID" />
     </Key>
     <Property Name="intColorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="vchNombreColor" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="CAT_Eventos">
+    <Key>
+      <PropertyRef Name="intEventoID" />
+    </Key>
+    <Property Name="intEventoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="vchEvento" Type="varchar" MaxLength="30" />
   </EntityType>
   <EntityType Name="CAT_Personas">
     <Key>
@@ -16,7 +44,7 @@
     <Property Name="vchNombrePersona" Type="varchar" MaxLength="50" />
     <Property Name="vchDireccionPersona" Type="varchar" MaxLength="250" />
     <Property Name="vchTelefonoPersona" Type="varchar" MaxLength="15" />
-    <Property Name="vhcEmailPersona" Type="varchar" MaxLength="50" />
+    <Property Name="vchEmailPersona" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="CAT_Productos">
     <Key>
@@ -123,6 +151,40 @@
     <Property Name="decTotalInvSal" Type="decimal" Precision="15" Scale="2" />
     <Property Name="vchEstadoInvSal" Type="varchar" MaxLength="50" />
   </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="FK_Bitacora_Productos_CAT_Eventos">
+    <End Role="CAT_Eventos" Type="Self.CAT_Eventos" Multiplicity="0..1" />
+    <End Role="Bitacora_Productos" Type="Self.Bitacora_Productos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CAT_Eventos">
+        <PropertyRef Name="intEventoID" />
+      </Principal>
+      <Dependent Role="Bitacora_Productos">
+        <PropertyRef Name="intEventoID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Bitacora_Productos_CAT_Productos">
+    <End Role="CAT_Productos" Type="Self.CAT_Productos" Multiplicity="0..1" />
+    <End Role="Bitacora_Productos" Type="Self.Bitacora_Productos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CAT_Productos">
+        <PropertyRef Name="intProductoID" />
+      </Principal>
+      <Dependent Role="Bitacora_Productos">
+        <PropertyRef Name="intProductoID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_CAT_Usuarios_CAT_RolUsuario">
     <End Role="CAT_RolUsuario" Type="Self.CAT_RolUsuario" Multiplicity="0..1" />
     <End Role="CAT_Usuarios" Type="Self.CAT_Usuarios" Multiplicity="*" />
@@ -132,6 +194,18 @@
       </Principal>
       <Dependent Role="CAT_Usuarios">
         <PropertyRef Name="intRolID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DetalleInvEnt_CAT_Productos">
+    <End Role="CAT_Productos" Type="Self.CAT_Productos" Multiplicity="0..1" />
+    <End Role="DetalleInvEnt" Type="Self.DetalleInvEnt" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CAT_Productos">
+        <PropertyRef Name="intProductoID" />
+      </Principal>
+      <Dependent Role="DetalleInvEnt">
+        <PropertyRef Name="intProductoID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -268,7 +342,9 @@
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="Control_Inventario_KMModelStoreContainer">
+    <EntitySet Name="Bitacora_Productos" EntityType="Self.Bitacora_Productos" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CAT_Colores" EntityType="Self.CAT_Colores" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CAT_Eventos" EntityType="Self.CAT_Eventos" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CAT_Personas" EntityType="Self.CAT_Personas" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CAT_Productos" EntityType="Self.CAT_Productos" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CAT_RolUsuario" EntityType="Self.CAT_RolUsuario" Schema="dbo" store:Type="Tables" />
@@ -280,9 +356,22 @@
     <EntitySet Name="DetalleInvSal" EntityType="Self.DetalleInvSal" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="InventarioEntrante" EntityType="Self.InventarioEntrante" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="InventarioSaliente" EntityType="Self.InventarioSaliente" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Bitacora_Productos_CAT_Eventos" Association="Self.FK_Bitacora_Productos_CAT_Eventos">
+      <End Role="CAT_Eventos" EntitySet="CAT_Eventos" />
+      <End Role="Bitacora_Productos" EntitySet="Bitacora_Productos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Bitacora_Productos_CAT_Productos" Association="Self.FK_Bitacora_Productos_CAT_Productos">
+      <End Role="CAT_Productos" EntitySet="CAT_Productos" />
+      <End Role="Bitacora_Productos" EntitySet="Bitacora_Productos" />
+    </AssociationSet>
     <AssociationSet Name="FK_CAT_Usuarios_CAT_RolUsuario" Association="Self.FK_CAT_Usuarios_CAT_RolUsuario">
       <End Role="CAT_RolUsuario" EntitySet="CAT_RolUsuario" />
       <End Role="CAT_Usuarios" EntitySet="CAT_Usuarios" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DetalleInvEnt_CAT_Productos" Association="Self.FK_DetalleInvEnt_CAT_Productos">
+      <End Role="CAT_Productos" EntitySet="CAT_Productos" />
+      <End Role="DetalleInvEnt" EntitySet="DetalleInvEnt" />
     </AssociationSet>
     <AssociationSet Name="FK_DetalleInvEnt_InventarioEntrante" Association="Self.FK_DetalleInvEnt_InventarioEntrante">
       <End Role="InventarioEntrante" EntitySet="InventarioEntrante" />

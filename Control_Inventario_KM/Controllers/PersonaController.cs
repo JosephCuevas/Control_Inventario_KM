@@ -15,6 +15,11 @@ namespace Control_Inventario_KM.Controllers
     {
 
         // Catalogo de Tipo de Personas
+         /*
+            {
+                "vchNombreTipoPersona": ""
+            }
+         */
         [HttpPost]
         [Route("catTipoPersona")]
 
@@ -47,13 +52,24 @@ namespace Control_Inventario_KM.Controllers
                     p.vchNombrePersona,
                     p.vchDireccionPersona,
                     p.vchTelefonoPersona,
-                    p.vhcEmailPersona
+                    p.vchEmailPersona
                 }).ToList();
                 return catalogoPersona;
             }
         }
 
         // Agregar Persona
+        /*
+            {
+                "persona": {
+                    "intTipoPersonaID": 1,
+                    "vchNombrePersona": "Kingmonster México",
+                    "vchDireccionPersona": "Dr José Maria Vertiz #86, Doctores, Cuauhtemoc, 06720",
+                    "vchTelefonoPersona": "5555781025",
+                    "vchEmailPersona": "ventas@kingmonster.com"
+                }
+            }
+         */
         [HttpPost]
         [Route("agregarPersona")]
 
@@ -76,6 +92,7 @@ namespace Control_Inventario_KM.Controllers
                     persona.vchNombrePersona = persona.vchNombrePersona;
                     persona.vchDireccionPersona = persona.vchDireccionPersona;
                     persona.vchTelefonoPersona = persona.vchTelefonoPersona;
+                    persona.vchEmailPersona = persona.vchEmailPersona;
                     conexion.CAT_Personas.Add(persona);
                     conexion.SaveChanges();
                     return new
@@ -89,6 +106,18 @@ namespace Control_Inventario_KM.Controllers
 
 
         // Actualiza Persona
+        /*
+            {
+                    "persona": {
+                    "intPersonaID":
+                    "intTipoPersonaID": 1,
+                    "vchNombrePersona": "Kingmonster México",
+                    "vchDireccionPersona": "Dr José Maria Vertiz #86, Doctores, Cuauhtemoc, 06720",
+                    "vchTelefonoPersona": "5555781025",
+                    "vchEmailPersona": "ventas@kingmonster.com"
+                }
+            }
+         */
         [HttpPost]
         [Route("actualizaPersona")]
 
@@ -99,8 +128,8 @@ namespace Control_Inventario_KM.Controllers
             {
                 if(conexion.CAT_Personas.Any(p => p.intPersonaID == persona.intPersonaID))
                 {
-                    if(conexion.CAT_Personas.Any(p => p.intPersonaID != persona.intPersonaID
-                    && p.vchNombrePersona == persona.vchNombrePersona))
+                    if (conexion.CAT_Personas.Any(p => p.intPersonaID != persona.intPersonaID
+                     && p.vchNombrePersona == persona.vchNombrePersona))
                     {
                         return new
                         {
@@ -116,6 +145,7 @@ namespace Control_Inventario_KM.Controllers
                         personaBase.vchNombrePersona = persona.vchNombrePersona;
                         personaBase.vchDireccionPersona = persona.vchNombrePersona;
                         personaBase.vchTelefonoPersona = persona.vchTelefonoPersona;
+                        personaBase.vchEmailPersona = persona.vchEmailPersona;
                         conexion.SaveChanges();
                         return new
                         {

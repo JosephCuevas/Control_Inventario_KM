@@ -49,7 +49,7 @@
           <Property Name="vchNombrePersona" Type="varchar" MaxLength="50" />
           <Property Name="vchDireccionPersona" Type="varchar" MaxLength="250" />
           <Property Name="vchTelefonoPersona" Type="varchar" MaxLength="15" />
-          <Property Name="vhcEmailPersona" Type="varchar" MaxLength="50" />
+          <Property Name="vchEmailPersona" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="CAT_Productos">
           <Key>
@@ -444,10 +444,10 @@
           <Property Name="vchNombrePersona" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="vchDireccionPersona" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="vchTelefonoPersona" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="vhcEmailPersona" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="InventarioEntrante" Relationship="Self.FK_InventarioEntrante_CAT_Personas" FromRole="CAT_Personas" ToRole="InventarioEntrante" />
           <NavigationProperty Name="InventarioSaliente" Relationship="Self.FK_InventarioSal_CAT_Pertsonas" FromRole="CAT_Personas" ToRole="InventarioSaliente" />
           <NavigationProperty Name="CAT_TipoPersona" Relationship="Self.FK_Personas_CAT_TipoPersona" FromRole="CAT_Personas" ToRole="CAT_TipoPersona" />
+          <Property Name="vchEmailPersona" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="CAT_Productos">
           <Key>
@@ -892,12 +892,12 @@
           <EntitySetMapping Name="CAT_Personas">
             <EntityTypeMapping TypeName="Control_Inventario_KMModel.CAT_Personas">
               <MappingFragment StoreEntitySet="CAT_Personas">
+                <ScalarProperty Name="vchEmailPersona" ColumnName="vchEmailPersona" />
                 <ScalarProperty Name="intPersonaID" ColumnName="intPersonaID" />
                 <ScalarProperty Name="intTipoPersonaID" ColumnName="intTipoPersonaID" />
                 <ScalarProperty Name="vchNombrePersona" ColumnName="vchNombrePersona" />
                 <ScalarProperty Name="vchDireccionPersona" ColumnName="vchDireccionPersona" />
                 <ScalarProperty Name="vchTelefonoPersona" ColumnName="vchTelefonoPersona" />
-                <ScalarProperty Name="vhcEmailPersona" ColumnName="vhcEmailPersona" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

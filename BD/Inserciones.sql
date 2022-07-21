@@ -51,6 +51,10 @@ insert into CAT_Eventos (vchEvento) values('Insert'),('Update'),('Delete')
 
 go
 
+insert into CAT_TipoPersona (vchNombreTipoPersona) values('Cliente'),('Proveedor')
+
+go
+
 select * from CAT_Usuarios;
 go
 select * from CAT_Colores;

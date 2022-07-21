@@ -114,7 +114,7 @@ create table CAT_Personas
 	vchNombrePersona varchar(50) null,
 	vchDireccionPersona varchar(250) null,
 	vchTelefonoPersona varchar(15) null,
-	vhcEmailPersona varchar(50) null,
+	vchEmailPersona varchar(50) null,
 	constraint PK_CAT_Personas primary key (intPersonaID)
 )
 

@@ -26,7 +26,7 @@ namespace Control_Inventario_KM.App_Data
         public string vchNombrePersona { get; set; }
         public string vchDireccionPersona { get; set; }
         public string vchTelefonoPersona { get; set; }
-        public string vhcEmailPersona { get; set; }
+        public string vchEmailPersona { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InventarioEntrante> InventarioEntrante { get; set; }
