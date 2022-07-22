@@ -34,6 +34,12 @@ namespace Control_Inventario_KM.Controllers
 
 
         // Catalogo de Personas
+        /*
+           {
+            "tipo": 0,
+            "nombre": ""
+           }
+         */
         [HttpPost]
         [Route("catPersona")]
 

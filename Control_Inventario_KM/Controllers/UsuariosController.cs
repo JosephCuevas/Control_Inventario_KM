@@ -15,6 +15,11 @@ namespace Control_Inventario_KM.Controllers
     {
 
         // Catalogo Rol de Usuarios
+        /*
+                {
+                  "vchNombreRol": ""
+                }
+         */
         [HttpPost]
         [Route("catRolUsuario")]
 
@@ -28,6 +33,13 @@ namespace Control_Inventario_KM.Controllers
         }
 
         // Lista Usuarios
+        /*
+            {
+                "nombre": "",
+                "rol": 0
+            }
+         */
+
         [HttpPost]
         [Route("listaUsuarios")]
 
@@ -55,6 +67,9 @@ namespace Control_Inventario_KM.Controllers
 
 
         // Agregar Usuario
+        /*
+            
+         */
         [HttpPost]
         [Route("agregarUsuario")]
 
@@ -63,7 +78,7 @@ namespace Control_Inventario_KM.Controllers
             CAT_Usuarios usuario = data["usuario"].ToObject<CAT_Usuarios>();
             using (var conexion = new Control_Inventario_KMEntities())
             {
-                if(conexion.CAT_Usuarios.Any(u => u.vchApellidoUsuario == usuario.vchNombreUsuario))
+                if(conexion.CAT_Usuarios.Any(u => u.vchNombreUsuario == usuario.vchNombreUsuario))
                 {
                     return new
                     {
