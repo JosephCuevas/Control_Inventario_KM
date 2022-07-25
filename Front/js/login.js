@@ -27,7 +27,7 @@ function logear(e){
                 localStorage.setItem("usuario", response.usuario.usuario);
                 localStorage.setItem("usuarioid", response.usuario.id);
                 localStorage.setItem("usuarionombre", response.usuario.nombre);
-                window.location.replace("./index.html");
+                window.location.replace("./personas.html");
                 console.log("Correcto");
             }
             else{
