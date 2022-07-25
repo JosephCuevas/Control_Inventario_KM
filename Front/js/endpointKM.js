@@ -108,7 +108,7 @@ else {
                 <option onclick="obtenerID(${intTipoProductoID})" value="${intTipoProductoID}">${vchNombreTipoProducto} </option>
                 `;
             
-                    seleccionTipoProBsq.innerHTML = `
+                    seleccionTipoProBusqueda.innerHTML = `
                 <option onclick="obtenerID(${intTipoProductoID})" value="${intTipoProductoID}">${vchNombreTipoProducto} </option>
                 `;
 
