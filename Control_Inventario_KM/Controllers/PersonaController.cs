@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using Control_Inventario_KM.App_Data;
 using Newtonsoft.Json.Linq;
+using System.Web.Http.Cors;
 
 namespace Control_Inventario_KM.Controllers
 {
@@ -21,6 +22,7 @@ namespace Control_Inventario_KM.Controllers
             }
          */
         [HttpPost]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
         [Route("catTipoPersona")]
 
         public object catTipoPersona([FromBody] JObject data)
@@ -41,6 +43,7 @@ namespace Control_Inventario_KM.Controllers
            }
          */
         [HttpPost]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
         [Route("catPersona")]
 
         public object catPersona([FromBody] JObject data)
@@ -77,6 +80,7 @@ namespace Control_Inventario_KM.Controllers
             }
          */
         [HttpPost]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
         [Route("agregarPersona")]
 
         public object agregarPersona([FromBody] JObject data)
@@ -125,6 +129,7 @@ namespace Control_Inventario_KM.Controllers
             }
          */
         [HttpPost]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
         [Route("actualizaPersona")]
 
         public object actualizaPersona([FromBody] JObject data)
