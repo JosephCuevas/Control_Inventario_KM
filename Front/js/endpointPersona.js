@@ -10,8 +10,10 @@ if (usuarioLogID === 0 || usuarioLogID === null) {
 }
 else {
     const APIListaPerso = 'https://localhost:44363/api/persona/catPersona';
+    const APITipoPerso = 'https://localhost:44363/api/persona/catTipoPersona';
 
     const tablaPersonas = document.querySelector('#tableBody');
+    const saludarUsuario = document.querySelector('#user');
 
     function salirLogout(){
         localStorage.removeItem('usuario');
@@ -30,6 +32,8 @@ else {
         "tipo": 0,
     };
 
+    limpiarHtml();
+
     /* Fetch de lista de personas */
     fetch(APIListaPerso, {
         method: 'POST',
@@ -43,42 +47,10 @@ else {
             imprimirHtml(response);
             listProductos = response;
             imprimirSeleccion();
+            imprimirFiltro();
         });
-
-
-    function imprimirFiltro() {
-        const APIFiltroTipoPersona = 'https://localhost:44363/api/persona/catTipoPersona';
-
-        var tipoPersona = {
-            "vchNombreTipoPersona": ""
-        }
-
-        fetch(APIFiltroTipoPersona, {
-            method: 'POST',
-            body: JSON.stringify(tipoPersona),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(res => res.json())
-            .catch(error => console.error('Error: ', error))
-            .then(response => {
-                const listaPersonas = response;
-
-                for (var i = 0; i < listaPersonas.length; i++) {
-                    const { vchNombreTipoPersona } = listaPersonas[i];
-                    const seleccionTipoPersona = document.createElement('option');
-
-                    seleccionTipoPersona.innerHTML = `
-                <option onclick="obtenerID(${intTipoPersonaID})" value="${intTipoPersonaID}">${vchNombreTipoPersona} </option>
-                `;
-
-                    tipoPersona.appendChild(seleccionTipoPersona);
-                }
-            })
-    }
-
-
+    
+    
     /* Función que imprime la respuesta de servidor, en este caso la de la listas de personas */
     function imprimirHtml(resApi) {
         const resListaPersonas = resApi;
@@ -116,42 +88,16 @@ else {
         }
     }
 
+
     /* Funcion de limpiar el html, dejar la tabla vacia */
     function limpiarHtml() {
-        tablaProductos.innerHTML = '';
+        tablaPersonas.innerHTML = '';
     }
 
-    /* Función para filtro de busqueda */
-    function inputFiltro() {
-        limpiarHtml();
-        const inputTerminoBusqueda = document.querySelector('#search').value;
-        const idFiltroTipoPersona = document.querySelector('#filtroTipoPersona');
-        const id = idFiltroTipoPersona.selectedIndex;
 
-        var filtro = {
-            "nombre": inputTerminoBusqueda,
-            "tipo": id
-        }
-
-        fetch(APIListaPerso, {
-            method: 'POST',
-            body: JSON.stringify(filtro),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(res => res.json())
-            .catch(error => console.error('Error: ', error))
-            .then(response => {
-                imprimirHtml(response);
-            });
-    }
-
-    /* Imprime la lista de selectores */
+    /* Imprime la lista de selectores junto al buscador de tipo de persona */
     function imprimirSeleccion() {
-
-        const APITipoPerso = 'https://localhost:44363/api/persona/catTipoPersona';
-        const selectFiltroTipoPersona = document.querySelector('#filtroTipoPersona');
+        const filtroTipoPersona = document.querySelector('#filtroTipoPersona');
 
         var tipoP = {
             "nombre": "",
@@ -177,12 +123,13 @@ else {
                     <option onclick="obtenerID(${intTipoPersonaID})" value="${intTipoPersonaID}">${vchNombreTipoPersona} </option>
                 `;
 
-                    selectFiltroTipoPersona.appendChild(selectTipoPerso);
+                    filtroTipoPersona.appendChild(selectTipoPerso);
                 }
             })
     
     }
 
+    /* ============= Imprime la lista dependiendo de el filtro ========== */
     function imprimirSelectores() {
         limpiarHtml();
 
@@ -207,6 +154,75 @@ else {
                 imprimirHtml(response);
             });
     }
-    
 
-}
+
+    /* Función para filtro de busqueda por cadena */
+    function inputFiltro() {
+        limpiarHtml();
+        const inputTerminoBusqueda = document.querySelector('#search').value;
+        const idFiltroTipoPersona = document.querySelector('#filtroTipoPersona');
+        const id = idFiltroTipoPersona.selectedIndex;
+
+        var filtro = {
+            "nombre": inputTerminoBusqueda,
+            "tipo": id
+        }
+
+        fetch(APIListaPerso, {
+            method: 'POST',
+            body: JSON.stringify(filtro),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(res => res.json())
+            .catch(error => console.error('Error: ', error))
+            .then(response => {
+                imprimirHtml(response);
+            });
+    }
+
+
+    /* ***************  Función para imprimir los select de la barra lateral izquierda de tipo de persona **************** */
+    function imprimirFiltro() {
+        const selectTipoPersona = document.querySelector('#selectTipoPersona');
+        var tipoPersona = {
+            "vchNombreTipoPersona": ""
+        }
+
+        fetch(APITipoPerso, {
+            method: 'POST',
+            body: JSON.stringify(tipoPersona),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(res => res.json())
+            .catch(error => console.error('Error: ', error))
+            .then(response => {
+                const listaPersonas = response;
+
+                for (var i = 0; i < listaPersonas.length; i++) {
+                    const { intTipoPersonaID, vchNombreTipoPersona } = listaPersonas[i];
+                    const seleccionTipoPersona = document.createElement('option');
+
+                    seleccionTipoPersona.innerHTML = `
+                <option onclick="obtenerID(${intTipoPersonaID})" value="${intTipoPersonaID}">${vchNombreTipoPersona} </option>
+                `;
+
+                    selectTipoPersona.appendChild(seleccionTipoPersona);
+                }
+            })
+    }
+
+    /* ******* Función para la creación o actualización de un producto ********/
+    function enviarDatosBD() {
+        const APIAgregarPersona = 'https://localhost:44363/api/persona/agregarPersona';
+        const APIEditarPersona = 'https://localhost:44363/api/usuario/actualizaUsuario';
+
+        const selectTipoPersona = document.querySelector('#selectTipoPersona').selectedIndex;
+        
+
+    }
+
+} // Fin del else
