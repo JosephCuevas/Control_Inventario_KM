@@ -154,7 +154,7 @@ namespace Control_Inventario_KM.Controllers
 
                         personaBase.intTipoPersonaID = persona.intTipoPersonaID;
                         personaBase.vchNombrePersona = persona.vchNombrePersona;
-                        personaBase.vchDireccionPersona = persona.vchNombrePersona;
+                        personaBase.vchDireccionPersona = persona.vchDireccionPersona;
                         personaBase.vchTelefonoPersona = persona.vchTelefonoPersona;
                         personaBase.vchEmailPersona = persona.vchEmailPersona;
                         conexion.SaveChanges();

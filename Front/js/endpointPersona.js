@@ -1,3 +1,4 @@
+
 const usuarioLog = localStorage.getItem("usuario");
 const usuarioLogID = localStorage.getItem("usuarioid");
 const usuarioLogNombre = localStorage.getItem("usuarionombre");
@@ -14,6 +15,36 @@ else {
 
     const tablaPersonas = document.querySelector('#tableBody');
     const saludarUsuario = document.querySelector('#user');
+    const formulario = document.querySelector('#formularioNuevaP');
+    const btnLimpiar = document.querySelector('#btnLimpiar');
+    const formBusqueda = document.querySelector('#formBusqueda');
+    const btnsalirLogout = document.querySelector('#salirLogout');
+
+    /** Event listeners **/
+    formBusqueda.addEventListener('submit', (e) => {
+        e.preventDefault();
+        imprimirSelectores();
+    })
+    
+    formulario.addEventListener('submit', (e) => {
+        e.preventDefault();
+        enviarDatosBD();
+    });
+
+    btnLimpiar.addEventListener('click', (e) => {
+        e.preventDefault();
+        limpiarFormulario();
+    });
+
+    btnsalirLogout.addEventListener('click', (e) => {
+        e.preventDefault();
+        salirLogout();
+    })
+
+    /** Array qeu almacena la lista de personas **/
+    var listaPersonas = [];
+    /* variable para actualizar producto */
+    var personaSeleccionada = 0;
 
     function salirLogout(){
         localStorage.removeItem('usuario');
@@ -45,7 +76,7 @@ else {
         .catch(error => console.error('Error:', error))
         .then(response => {
             imprimirHtml(response);
-            listProductos = response;
+            listaPersonas = response;
             imprimirSeleccion();
             imprimirFiltro();
         });
@@ -66,7 +97,7 @@ else {
                 ${vchNombrePersona}
             </label></td>
             <td class="shadow px-4 text-center"><label class="block">
-                $ ${vchDireccionPersona}
+                ${vchDireccionPersona}
             </label></td>
             <td class="shadow px-4 text-center"><label class="block">
                 ${vchTelefonoPersona}
@@ -75,12 +106,9 @@ else {
                 ${vchEmailPersona}
             </label></td>
             <td class="shadow px-8 inline-flex items-center" id="botones">
-                <button type="button" onclick="editarProducto(this,${intPersonaID})"
+                <button type="button" onclick="editarPersona(this,${intPersonaID})"
                             class="flex py-1 px-2 text-xs text-center text-white bg-blue-500 rounded-lg hover:bg-blue-700">
                             Editar</button>
-                <button type="button" onclick="enviarDatosInvDB()"
-                            class="flex py-1 px-2 ml-1 text-xs text-center text-white bg-blue-500 rounded-lg hover:bg-gray-700">
-                            Guardar</button>
             </td>
         
             `
@@ -218,11 +246,113 @@ else {
     /* ******* Función para la creación o actualización de un producto ********/
     function enviarDatosBD() {
         const APIAgregarPersona = 'https://localhost:44363/api/persona/agregarPersona';
-        const APIEditarPersona = 'https://localhost:44363/api/usuario/actualizaUsuario';
+        const APIEditarPersona = 'https://localhost:44363/api/persona/actualizaPersona';
 
         const selectTipoPersona = document.querySelector('#selectTipoPersona').selectedIndex;
-        
+        const nombrePersona = document.querySelector('#nombrePersona').value;
+        const direccionPersona = document.querySelector('#direccionPersona').value;
+        const telefonoPersona = document.querySelector('#telefonoPersona').value;
+        const emailPersona = document.querySelector('#emailPersona').value;
 
+        var nuevaPersona = {};
+        if (personaSeleccionada > 0) {
+            personaSeleccionada = Number(personaSeleccionada);
+            nuevaPersona = {
+                "persona": {
+                    "intPersonaID": personaSeleccionada,
+                    "intTipoPersonaID": selectTipoPersona,
+                    "vchNombrePersona": nombrePersona,
+                    "vchDireccionPersona": direccionPersona,
+                    "vchTelefonoPersona": telefonoPersona,
+                    "vchEmailPersona": emailPersona
+                }
+            };
+
+            fetch(APIEditarPersona, {
+                method: 'POST',
+                body: JSON.stringify(nuevaPersona),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(res => res.json())
+                .catch(error => console.error('Error:', error))
+                .then(response => {
+                    if (response.valido) {
+                        alert("Persona actualizada correctamente");
+                        window.location.reload();
+                        limpiarFormulario();
+                    }
+                    else {
+                        alert("Existe un error al editar la persona")
+                    }
+                });
+        } else {
+            nuevaPersona = {
+                "persona": {
+                    "intTipoPersonaID": selectTipoPersona,
+                    "vchNombrePersona": nombrePersona,
+                    "vchDireccionPersona": direccionPersona,
+                    "vchTelefonoPersona": telefonoPersona,
+                    "vchEmailPersona": emailPersona
+                }
+            };
+
+            fetch(APIAgregarPersona, {
+                method: 'POST',
+                body: JSON.stringify(nuevaPersona),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(res => res.json())
+                .catch(error => console.error('Error:', error))
+                .then(response => {
+                    if (response.valido) {
+                        alert("Persona aagregada correctamente");
+                        window.location.reload();
+                        limpiarFormulario();
+                    }
+                    else {
+                        alert("Existe un error al agregar la persona")
+                    }
+                });
+        }
     }
+
+    /** Función para limpiar los valores del formulario **/
+    function limpiarFormulario() {
+        personaSeleccionada = 0;
+
+        const selectTipoPersona = document.querySelector('#selectTipoPersona');
+        selectTipoPersona.selectedIndex = 0;
+        const nombrePersona = document.querySelector('#nombrePersona');
+        nombrePersona.value = '';
+        const direccionPersona = document.querySelector('#direccionPersona');
+        direccionPersona.value = '';
+        const telefonoPersona = document.querySelector('#telefonoPersona');
+        telefonoPersona.value = '';
+        const emailPersona = document.querySelector('#emailPersona');
+        emailPersona.value = '';
+    }
+
+    /** Función para editar la persona **/
+    function editarPersona(check, intPersonaID) {
+        const personas = listaPersonas.filter(p => p.intPersonaID == intPersonaID);
+        const persona = personas[0];
+
+        const selectTipoPersona = document.querySelector('#selectTipoPersona');
+        selectTipoPersona.selectedIndex = persona.intTipoPersonaID;
+        const nombrePersona = document.querySelector('#nombrePersona');
+        nombrePersona.value = persona.vchNombrePersona;
+        const direccionPersona = document.querySelector('#direccionPersona');
+        direccionPersona.value = persona.vchDireccionPersona;
+        const telefonoPersona = document.querySelector('#telefonoPersona');
+        telefonoPersona.value = persona.vchTelefonoPersona;
+        const emailPersona = document.querySelector('#emailPersona');
+        emailPersona.value = persona.vchEmailPersona;
+
+        personaSeleccionada = persona.intPersonaID;
+    }
+
+
 
 } // Fin del else
