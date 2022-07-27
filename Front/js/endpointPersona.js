@@ -184,33 +184,6 @@ else {
     }
 
 
-    /* Función para filtro de busqueda por cadena */
-    function inputFiltro() {
-        limpiarHtml();
-        const inputTerminoBusqueda = document.querySelector('#search').value;
-        const idFiltroTipoPersona = document.querySelector('#filtroTipoPersona');
-        const id = idFiltroTipoPersona.selectedIndex;
-
-        var filtro = {
-            "nombre": inputTerminoBusqueda,
-            "tipo": id
-        }
-
-        fetch(APIListaPerso, {
-            method: 'POST',
-            body: JSON.stringify(filtro),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(res => res.json())
-            .catch(error => console.error('Error: ', error))
-            .then(response => {
-                imprimirHtml(response);
-            });
-    }
-
-
     /* ***************  Función para imprimir los select de la barra lateral izquierda de tipo de persona **************** */
     function imprimirFiltro() {
         const selectTipoPersona = document.querySelector('#selectTipoPersona');
@@ -235,7 +208,7 @@ else {
                     const seleccionTipoPersona = document.createElement('option');
 
                     seleccionTipoPersona.innerHTML = `
-                <option onclick="obtenerID(${intTipoPersonaID})" value="${intTipoPersonaID}">${vchNombreTipoPersona} </option>
+                <option value="${intTipoPersonaID}">${vchNombreTipoPersona} </option>
                 `;
 
                     selectTipoPersona.appendChild(seleccionTipoPersona);
