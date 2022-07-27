@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Control_Inventario_KM.App_Data;
+using System.Web.Http.Cors;
 
 namespace Control_Inventario_KM.Controllers
 {
@@ -21,6 +22,7 @@ namespace Control_Inventario_KM.Controllers
                 }
          */
         [HttpPost]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
         [Route("catRolUsuario")]
 
         public object catRolUsuario([FromBody] JObject data)
@@ -41,6 +43,7 @@ namespace Control_Inventario_KM.Controllers
          */
 
         [HttpPost]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
         [Route("listaUsuarios")]
 
         public object listaUsuarios([FromBody] JObject data)
@@ -68,9 +71,21 @@ namespace Control_Inventario_KM.Controllers
 
         // Agregar Usuario
         /*
+         *  {
+                "usuario": {
+                "intRolID": 1,
+                "vchNombreUsuario": "Ricardo",
+                "vchApellidoUsuario": "Almacen",
+                "vchDireccionUsuario": "Dr José María Vertiz 86, Doctores, Cuauhtemoc, 06720, CDMX",
+                "vchTelefonoUsuario": "5566448822",
+                "vchUserUsuario": "almacen",
+                "vchContraseñaUsuario": "vertiz123"
+                }
+            }
             
          */
         [HttpPost]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
         [Route("agregarUsuario")]
 
         public object agregarUsuario([FromBody] JObject data)
@@ -109,7 +124,23 @@ namespace Control_Inventario_KM.Controllers
 
 
         // Actualiza Usuario
+        /*
+            {
+                "usuario": {
+                "intUsuarioID": 3,
+                "intRolID": 1,
+                "vchNombreUsuario": "Marta",
+                "vchApellidoUsuario": "Ventas",
+                "vchDireccionUsuario": "Dr José María Vertiz 86, Doctores, Cuauhtemoc, 06720, CDMX",
+                "vchTelefonoUsuario": "5522884466",
+                "vchUserUsuario": "ventas",
+                "vchContraseñaUsuario": "vertiz123"
+                }
+    
+            }
+         */
         [HttpPost]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
         [Route("actualizaUsuario")]
 
         public object actualizaUsuario([FromBody] JObject data)
