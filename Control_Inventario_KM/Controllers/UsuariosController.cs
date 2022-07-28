@@ -56,13 +56,15 @@ namespace Control_Inventario_KM.Controllers
                 && (nombre == string.Empty || u.vchNombreUsuario.Contains(nombre))
                 ).Select(u => new
                 {
+                    u.intUsuarioID,
                     u.intRolID,
                     u.vchNombreUsuario,
                     u.vchApellidoUsuario,
                     u.vchDireccionUsuario,
                     u.vchTelefonoUsuario,
                     u.vchUserUsuario,
-                    u.bitEstadoUsuario
+                    u.bitEstadoUsuario,
+                    u.vchContraseñaUsuario
                 }).ToList();
                 return catalogoUsuarios;
             }
@@ -169,8 +171,7 @@ namespace Control_Inventario_KM.Controllers
                         usuarioBase.vchDireccionUsuario = usuario.vchDireccionUsuario;
                         usuarioBase.vchTelefonoUsuario = usuario.vchTelefonoUsuario;
                         usuarioBase.vchUserUsuario = usuario.vchUserUsuario;
-                        // usuarioBase.vchContraseñaUsuario = usuario.vchContraseñaUsuario;
-                        usuarioBase.bitEstadoUsuario = usuario.bitEstadoUsuario;
+                        usuarioBase.vchContraseñaUsuario = usuario.vchContraseñaUsuario;
                         conexion.SaveChanges();
                         return new
                         {
@@ -187,6 +188,39 @@ namespace Control_Inventario_KM.Controllers
                         Detalle = "El usuario no existe"
                     };
                 }
+            }
+        }
+
+        /* Actualiza Estado de Usuario */
+        [HttpPost]
+        [EnableCors(origins:"*", headers:"*", methods:"*")]
+        [Route("actualizaEstadoUsuario")]
+
+        public object actualizaEstadoUsuario([FromBody] JObject data)
+        {
+            int usuario = data["usuarioID"].ToObject<int>();
+            using ( var conexion = new Control_Inventario_KMEntities())
+            {
+                if (conexion.CAT_Usuarios.Any(u => u.intUsuarioID == usuario)) {
+                    var usuarioBase = conexion.CAT_Usuarios.FirstOrDefault(u => u.intUsuarioID == usuario);
+                    usuarioBase.bitEstadoUsuario = !usuarioBase.bitEstadoUsuario;
+                    conexion.SaveChanges();
+                    return new
+                    {
+                        valido = true,
+                        Detalle = "Estado de usuario actualizado correctamente"
+                    };
+                }
+                else
+                {
+                    return new
+                    {
+                        valido = false,
+                        Detalle = "El usuario no existe"
+                    };
+
+                }
+
             }
         }
 
