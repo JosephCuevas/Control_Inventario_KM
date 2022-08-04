@@ -28,6 +28,6 @@ else {
     btn_menu.addEventListener('click', (e) => {
         e.preventDefault();
         side_menu.classList.toggle('hidden');
-    })
+    });
 
 }
